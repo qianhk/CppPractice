@@ -6,6 +6,7 @@
 
 void *say_hello(void *args) {
     cout << "Hello w3cschool, addr:" << args << endl;
+    return nullptr;
 }
 
 void Thread::doOperate() {

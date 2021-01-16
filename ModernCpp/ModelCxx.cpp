@@ -36,6 +36,7 @@ int main2() {
         return x + y + v1 + (*v2);
     };
     std::cout << "表达式捕获:" << add(3, 4) << std::endl;
+    return 0;
 }
 
 auto addLambda = [](auto x, auto y) {

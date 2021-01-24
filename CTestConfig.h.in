@@ -1,0 +1,9 @@
+
+// the configured options and settings for Tutorial
+#define CTest_VERSION_MAJOR @CTest_VERSION_MAJOR@
+#define CTest_VERSION_MINOR @CTest_VERSION_MINOR@
+#define CTest_VERSION_PATCH @CTest_VERSION_PATCH@
+
+#cmakedefine USE_MYMATH
+#cmakedefine HAVE_LOG
+#cmakedefine HAVE_EXP

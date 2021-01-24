@@ -1,16 +1,110 @@
+message("In Main/CMakeLists.txt >>>>>>>>>>")
+
 cmake_minimum_required(VERSION 3.17)
-project(CppPractice)
+
+project(CppPractice VERSION 1.0.3)
+
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+message("PROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR}")
+message("PROJECT_BINARY_DIR=${PROJECT_BINARY_DIR}")
+message("CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
+
+set(CMAKE_INSTALL_PREFIX "./TestInstall")
+
+set(CTest_VERSION_MAJOR 1)
+set(CTest_VERSION_MINOR 2)
+set(CTest_VERSION_PATCH 3)
+
+option(USE_MYMATH "Use my kai's math implementation" ON)
+
+
+# does this system provide the log and exp functions?
+include (CheckSymbolExists)
+check_symbol_exists (log "math.h" HAVE_LOG)
+check_symbol_exists (exp "cmath" HAVE_EXP)
+
+message("HAVE_LOG=${HAVE_LOG}")
+message("HAVE_EXP=${HAVE_EXP}")
+
+if (NOT (HAVE_LOG AND HAVE_EXP))
+    message("NO log and exp")
+endif()
+
+configure_file(
+        "${PROJECT_SOURCE_DIR}/CTestConfig.h.in"
+        "${PROJECT_BINARY_DIR}/CTestConfig.h"
+)
+
+include_directories("${PROJECT_BINARY_DIR}")
+
+message("before EXTRA_LIBS: ${EXTRA_LIBS}")
+
+if (USE_MYMATH)
+    include_directories("${PROJECT_SOURCE_DIR}/MathFunctions")
+    add_subdirectory(MathFunctions)
+    set(EXTRA_LIBS ${EXTRA_LIBS} MathFunctions)
+    #message("CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
+endif(USE_MYMATH)
+
+message("after: ${EXTRA_LIBS}")
 
 add_subdirectory(ModernCpp)
 
 #include_directories(${PROJECT_SOURCE_DIR}/ModernCpp)
+
+AUX_SOURCE_DIRECTORY(./UseMathFunctions USE_MATH_FUNCTION_DIR_SRCS)
+message("USE_MATH_FUNCTION_DIR_SRCS=${USE_MATH_FUNCTION_DIR_SRCS}")
 
 #当前目录下所有源文件赋给DIR_SRCS
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 message("DIR_SRCS=${DIR_SRCS}")
 
 #// main.cpp Shape.cpp Shape.h virtual_derived.h FileOperate.cpp FileOperate.h Temple.hpp Temple.h Thread.cpp Thread.h ModelCxx.cpp ModelCxx.h
-add_executable(cpp_practice ${DIR_SRCS})
+add_executable(cpp_practice ${DIR_SRCS} ${USE_MATH_FUNCTION_DIR_SRCS})
 
-target_link_libraries(cpp_practice libModernCpp)
+target_link_libraries(cpp_practice libModernCpp ${EXTRA_LIBS})
+
+
+install(TARGETS cpp_practice DESTINATION bin)
+install(FILES "${PROJECT_BINARY_DIR}/CTestConfig.h"
+        DESTINATION include)
+
+enable_testing()
+
+add_test(CTestRuns cpp_practice 25)
+set_tests_properties (CTestRuns PROPERTIES PASS_REGULAR_EXPRESSION "25 is 5")
+
+add_test (CTestNegative cpp_practice -25)
+set_tests_properties (CTestNegative PROPERTIES PASS_REGULAR_EXPRESSION "-25 is -nan")
+
+add_test (CTestSmall cpp_practice 0.01)
+set_tests_properties (CTestSmall PROPERTIES PASS_REGULAR_EXPRESSION "0.01 is 0.1")
+
+add_test (CTestUsage cpp_practice)
+set_tests_properties (CTestUsage PROPERTIES PASS_REGULAR_EXPRESSION "number")
+
+#define a macro to simplify adding tests, then use it
+macro (do_test arg result)
+    add_test (CTestComp${arg} cpp_practice ${arg})
+    set_tests_properties (CTestComp${arg} PROPERTIES PASS_REGULAR_EXPRESSION ${result})
+endmacro (do_test)
+
+# do a bunch of result based tests
+do_test (16 "16 is 4")
+do_test (abc "0 is 0")
+
+# build a CPack driven installer package
+include (InstallRequiredSystemLibraries)
+set(CPACK_GENERATOR "ZIP")
+set(CPACK_SOURCE_GENERATOR "7Z")
+set(CPACK_SOURCE_IGNORE_FILES "cmake-build*" ".idea*" ".gitignore" ".git" "*.zip" "*.7z")
+
+set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+set (CPACK_PACKAGE_VERSION_MAJOR "${CTEST_VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${CTEST_VERSION_MINOR}")
+set (CPACK_PACKAGE_VERSION_PATCH "${CTEST_VERSION_PATCH}")
+include (CPack)
+
+message("out Main/CMakeLists.txt <<<<<<<<<<")

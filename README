@@ -1,2 +1,15 @@
 
 for C/C++ Practice.
+
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+
+cmake -G "NMake Makefiles" .. -DUSE_MYMATH=OFF
+nmake or cmake --build .
+
+nmake test
+
+nmake install
+
+cpack -G ZIP
+cpack --config CPackSourceConfig.cmake -G 7Z
+

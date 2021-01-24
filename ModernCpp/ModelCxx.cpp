@@ -65,15 +65,16 @@ void modelRuntimeTest() {
     functional(f); // 传递闭包对象，隐式转换为 foo* 类型的函数指针值
     f(1); // lambda 表达式调用
 
-    // std::function 包装了一个返回值为 int, 参数为 int 的函数
-    std::function<int(int)> func = foo2;
-
-    int important = 10;
-    std::function<int(int)> func2 = [&](int value) -> int {
-        return 1 + value + important;
-    };
-//    important = 100;
-    std::cout << "std::function " << func(10) << std::endl;
-    std::cout << "std::function " << func2(10) << std::endl;
+    //windows compile error "function": 不是 "std" 的成员
+//    // std::function 包装了一个返回值为 int, 参数为 int 的函数
+//    std::function<int(int)> func = foo2;
+//
+//    int important = 10;
+//    std::function<int(int)> func2 = [&](int value) -> int {
+//        return 1 + value + important;
+//    };
+////    important = 100;
+//    std::cout << "std::function " << func(10) << std::endl;
+//    std::cout << "std::function " << func2(10) << std::endl;
 
 }

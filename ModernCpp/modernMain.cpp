@@ -31,7 +31,7 @@ int mainModerns() {
     // Book2 详述
     strcpy(Book2.title, "CSS 教程");
     strcpy(Book2.author, "Runoob");
-    strcpy(Book2.subject, "前端技术");
+    strcpy(Book2.subject, "前端技术subtitle");
     Book2.book_id = 12346;
 
     // 通过传 Book1 的地址来输出 Book1 信息
@@ -70,8 +70,8 @@ int mainModerns() {
 //    int a = 1;
 //    int b = 0;
 
-    int divZero = 100 / 0;
-    cout << "after 1/0=" << divZero << endl;
+//    int divZero = 100 / 0;
+//    cout << "after 1/0=" << divZero << endl;
 
     int i = 39;
     int j = 20;

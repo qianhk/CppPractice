@@ -6,8 +6,7 @@
 #define TESTDEMO_THREAD_H
 
 #include <iostream>
-// 必须的头文件是
-#include <pthread.h>
+
 
 using namespace std;
 

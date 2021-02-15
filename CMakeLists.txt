@@ -56,6 +56,8 @@ message("after: ${EXTRA_LIBS}")
 
 add_subdirectory(ModernCpp)
 
+add_subdirectory(DllFunc)
+
 #include_directories(${PROJECT_SOURCE_DIR}/ModernCpp)
 
 AUX_SOURCE_DIRECTORY(./UseMathFunctions USE_MATH_FUNCTION_DIR_SRCS)
@@ -68,7 +70,7 @@ message("DIR_SRCS=${DIR_SRCS}")
 #// main.cpp Shape.cpp Shape.h virtual_derived.h FileOperate.cpp FileOperate.h Temple.hpp Temple.h Thread.cpp Thread.h ModelCxx.cpp ModelCxx.h
 add_executable(cpp_practice ${DIR_SRCS} ${USE_MATH_FUNCTION_DIR_SRCS} WinApi/usewinapi.cpp WinApi/usewinapi.h)
 
-target_link_libraries(cpp_practice libModernCpp ${EXTRA_LIBS})
+target_link_libraries(cpp_practice libModernCpp ${EXTRA_LIBS} DllFunc)
 
 
 install(TARGETS cpp_practice DESTINATION bin)

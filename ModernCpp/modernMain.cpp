@@ -115,7 +115,7 @@ int mainModerns() {
 
 // 该函数以结构指针作为参数
 void printBook(Books *book) {
-    cout << "书标题  : " << book->title << endl;
+    cout << "书标题 : " << book->title << endl;
     cout << "书作者 : " << book->author << endl;
     cout << "书类目 : " << book->subject << endl;
     cout << "书 ID : " << book->book_id << endl;

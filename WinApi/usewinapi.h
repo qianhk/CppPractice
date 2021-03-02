@@ -8,6 +8,7 @@
 #include <Windows.h>
 
 int mainUseWinApi(int argc, char *argv[]);
+void testInternetCrackUrl();
 
 class useWinApi {
 

@@ -7,7 +7,9 @@
 #include <shellapi.h>
 #include <shlwapi.h>
 #include <iostream>
+#include <wininet.h>
 
+#pragma comment( lib, "WinInet.lib" )
 #pragma comment(lib, "shell32.lib")
 #pragma comment(lib, "shlwapi.lib")
 
@@ -31,3 +33,43 @@ int mainUseWinApi(int argc, char *argv[]) {
     }
     return 0;
 }
+
+void testInternetCrackUrl() {
+    TCHAR scheme[1000];
+    TCHAR hostName[1000];
+    TCHAR userName[1000];
+    TCHAR password[1000];
+    TCHAR urlPath[1000];
+    TCHAR extraInfo[1000];
+
+    URL_COMPONENTS uc;
+    memset(&uc, 0, sizeof(uc));
+    uc.dwStructSize = sizeof(uc);
+
+    uc.lpszScheme = scheme;
+    uc.lpszHostName = hostName;
+    uc.lpszUserName = userName;
+//    uc.lpszPassword = password;
+    uc.lpszUrlPath = urlPath;
+    uc.lpszExtraInfo = extraInfo;
+
+    uc.dwSchemeLength = _countof(scheme);
+    uc.dwHostNameLength = _countof(hostName);
+    uc.dwUserNameLength = _countof(userName);
+//    uc.dwPasswordLength = _countof(password);
+    uc.dwUrlPathLength = _countof(urlPath);
+    uc.dwExtraInfoLength = _countof(extraInfo);
+
+    PCWSTR testUrl = L"http://kai:pw@blog.csdn.net:8090/test/article/details/123456?id=123&name=kai2&key3=%41%61&key4=%%3";
+    ::InternetCrackUrl(testUrl, wcslen(testUrl), ICU_DECODE, &uc);
+
+    printf("scheme: '%ls'\n", uc.lpszScheme);
+    printf("host name: '%ls'\n", uc.lpszHostName);
+    printf("port: %d\n", uc.nPort);
+    printf("user name: '%ls'\n", uc.lpszUserName);
+    printf("password: '%ls'\n", uc.lpszPassword);
+    printf("url path: '%ls'\n", uc.lpszUrlPath);
+    printf("extra info: '%ls'\n", uc.lpszExtraInfo);
+
+}
+

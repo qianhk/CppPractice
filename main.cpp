@@ -23,6 +23,8 @@ int _tmain(int argc, char *argv[]) {
 
     mainUseWinApi(argc, argv);
 
+    testInternetCrackUrl();
+
     hello();
 
     PWSTR path;

@@ -15,6 +15,30 @@ message("PROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR}")
 message("PROJECT_BINARY_DIR=${PROJECT_BINARY_DIR}")
 message("CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
 
+MESSAGE(STATUS "CMAKE_SYSTEM is ${CMAKE_SYSTEM}")
+MESSAGE(STATUS "CMAKE_SYSTEM_NAME is ${CMAKE_SYSTEM_NAME}")
+IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    MESSAGE(STATUS "current platform: Linux ")
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    MESSAGE(STATUS "current platform: Windows")
+ELSE ()
+    MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
+ENDIF ()
+
+IF (WIN32)
+    MESSAGE(STATUS "Now is windows")
+ELSEIF (APPLE)
+    MESSAGE(STATUS "Now is Apple systems.")
+ELSEIF (UNIX)
+    MESSAGE(STATUS "Now is UNIX-like OS's.")
+ENDIF ()
+
+if (WIN32)
+    message("window USERPROFILE=$ENV{USERPROFILE}")   #C:\Users\xxx
+    message("window APPDATA=$ENV{APPDATA}")           #C:\Users\xxx\AppData\Roaming
+    message("window LOCALAPPDATA=$ENV{LOCALAPPDATA}") #C:\Users\xxx\AppData\Local
+endif ()
+
 set(CMAKE_INSTALL_PREFIX "./TestInstall")
 
 set(CTest_VERSION_MAJOR 1)
@@ -25,16 +49,16 @@ option(USE_MYMATH "Use my kai's math implementation" ON)
 
 
 # does this system provide the log and exp functions?
-include (CheckSymbolExists)
-check_symbol_exists (log "math.h" HAVE_LOG)
-check_symbol_exists (exp "cmath" HAVE_EXP)
+include(CheckSymbolExists)
+check_symbol_exists(log "math.h" HAVE_LOG)
+check_symbol_exists(exp "cmath" HAVE_EXP)
 
 message("HAVE_LOG=${HAVE_LOG}")
 message("HAVE_EXP=${HAVE_EXP}")
 
 if (NOT (HAVE_LOG AND HAVE_EXP))
     message("NO log and exp")
-endif()
+endif ()
 
 configure_file(
         "${PROJECT_SOURCE_DIR}/CTestConfig.h.in"
@@ -50,7 +74,7 @@ if (USE_MYMATH)
     add_subdirectory(MathFunctions)
     set(EXTRA_LIBS ${EXTRA_LIBS} MathFunctions)
     #message("CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
-endif(USE_MYMATH)
+endif (USE_MYMATH)
 
 message("after: ${EXTRA_LIBS}")
 
@@ -80,37 +104,37 @@ install(FILES "${PROJECT_BINARY_DIR}/CTestConfig.h"
 enable_testing()
 
 add_test(CTestRuns cpp_practice 25)
-set_tests_properties (CTestRuns PROPERTIES PASS_REGULAR_EXPRESSION "25 is 5")
+set_tests_properties(CTestRuns PROPERTIES PASS_REGULAR_EXPRESSION "25 is 5")
 
-add_test (CTestNegative cpp_practice -25)
-set_tests_properties (CTestNegative PROPERTIES PASS_REGULAR_EXPRESSION "-25 is -nan")
+add_test(CTestNegative cpp_practice -25)
+set_tests_properties(CTestNegative PROPERTIES PASS_REGULAR_EXPRESSION "-25 is -nan")
 
-add_test (CTestSmall cpp_practice 0.01)
-set_tests_properties (CTestSmall PROPERTIES PASS_REGULAR_EXPRESSION "0.01 is 0.1")
+add_test(CTestSmall cpp_practice 0.01)
+set_tests_properties(CTestSmall PROPERTIES PASS_REGULAR_EXPRESSION "0.01 is 0.1")
 
-add_test (CTestUsage cpp_practice)
-set_tests_properties (CTestUsage PROPERTIES PASS_REGULAR_EXPRESSION "number")
+add_test(CTestUsage cpp_practice)
+set_tests_properties(CTestUsage PROPERTIES PASS_REGULAR_EXPRESSION "number")
 
 #define a macro to simplify adding tests, then use it
-macro (do_test arg result)
-    add_test (CTestComp${arg} cpp_practice ${arg})
-    set_tests_properties (CTestComp${arg} PROPERTIES PASS_REGULAR_EXPRESSION ${result})
-endmacro (do_test)
+macro(do_test arg result)
+    add_test(CTestComp${arg} cpp_practice ${arg})
+    set_tests_properties(CTestComp${arg} PROPERTIES PASS_REGULAR_EXPRESSION ${result})
+endmacro(do_test)
 
 # do a bunch of result based tests
-do_test (16 "16 is 4")
-do_test (abc "0 is 0")
+do_test(16 "16 is 4")
+do_test(abc "0 is 0")
 
 # build a CPack driven installer package
-include (InstallRequiredSystemLibraries)
+include(InstallRequiredSystemLibraries)
 set(CPACK_GENERATOR "ZIP")
 set(CPACK_SOURCE_GENERATOR "7Z")
 set(CPACK_SOURCE_IGNORE_FILES "cmake-build*" ".idea*" ".gitignore" ".git" "*.zip" "*.7z")
 
-set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
-set (CPACK_PACKAGE_VERSION_MAJOR "${CTEST_VERSION_MAJOR}")
-set (CPACK_PACKAGE_VERSION_MINOR "${CTEST_VERSION_MINOR}")
-set (CPACK_PACKAGE_VERSION_PATCH "${CTEST_VERSION_PATCH}")
-include (CPack)
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+set(CPACK_PACKAGE_VERSION_MAJOR "${CTEST_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${CTEST_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${CTEST_VERSION_PATCH}")
+include(CPack)
 
 message("out Main/CMakeLists.txt <<<<<<<<<<")

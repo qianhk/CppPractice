@@ -1,0 +1,176 @@
+                        第I部分 必备知识
+
+一、错误处理
+GetLastError SetLastError
+FormatMessage
+Edit_LimitText(hwndCtl, cchMax)
+#define Edit_GetText(hwndCtl, lpch, cchMax) GetWindowText((hwndCtl), (lpch), (cchMax))
+GetDlgItem(hwnd, IDC_ERRORCODE)
+SetDlgItemText
+GetDlgItemInt SetDlgItemInt
+LoadLibraryEx
+DialogBoxParam
+
+二、字符和字符串处理
+使用unicode处理字符串, UNICODE _UNICODE 宏同时指定 前者windows用的，后者C运行库用
+_countof(szBuffer)
+MultiByteToWideChar(CP_ACP, 0, szCmdLine, Size, pPos, wcslen(pPos));
+WideCharToMultiByte
+C语言提供的转换函数为 mbstowcs()/wcstombs()
+strcmp strcpy  _s函数
+wcscmp wcscpy  _s函数
+CompareStringOrdinal 最后一个参数ignoreCase，返回CSTR_EQUAL表示相同
+IsTextUnicode
+
+三、内核对象
+
+                        第II部分 工作机理
+
+四、进程
+
+
+
+
+
+五、作业
+
+
+
+
+
+六、线程基础
+
+
+
+
+
+七、线程调度、优先级和关联性
+
+
+
+
+
+八、用户模式下的线程同步
+
+
+
+
+
+九、用内核对象进行线程同步
+
+
+
+
+
+十、同步设备I/O与异步设备I/O
+
+
+
+
+
+十一、Windows线程池
+
+
+
+
+
+十二、纤程
+
+
+
+
+
+                        第III部分 内存管理
+
+十三、Windows内存体系结构
+
+
+
+
+
+十四、探索虚拟内存
+
+
+
+
+
+十五、在应用程序中使用虚拟内存
+
+
+
+
+
+十六、线程栈
+
+
+
+
+
+十七、内存映射文件
+
+
+
+
+
+十八、堆
+
+
+
+
+
+                        第IV部分 动态链接库
+
+十九、DLL基础
+
+
+
+
+
+二十、DLL高级技术
+
+
+
+
+
+二十一、线程局部存储区
+
+
+
+
+
+二十二、DLL注入和API拦截
+
+
+
+
+
+                        第V部分 结构化异常处理
+
+二十三、中止处理程序
+
+
+
+
+
+二十四、异常处理程序与软件异常
+
+
+
+
+
+二十五、未处理异常、向量化异常处理与C++异常
+
+
+
+
+
+二十六、错误报告与应用程序恢复
+
+
+
+
+
+                        第VI部分
+
+附录A 构建环境
+附录B 消息处理宏、子控件宏和API宏

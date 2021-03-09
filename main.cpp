@@ -18,13 +18,16 @@ void invalidParameterErrorHandler(PCTSTR expression, PCTSTR function, PCTSTR fil
 int _tmain(int argc, char *argv[]) {
 
 //    setlocale(LC_ALL, "UTF-8");
-    setlocale(LC_ALL, "zh_CN.UTF-8");
+//    setlocale(LC_ALL, "zh_CN.UTF-8");
     _set_invalid_parameter_handler(invalidParameterErrorHandler);
     _CrtSetReportMode(_CRT_ASSERT, 0);
 
-    system("chcp 65001 > nul");
+//    system("chcp 65001 > nul");
 
 //    system("pause");
+
+    std::cout << "sizeof(long)=" << sizeof(long) << std::endl;
+    std::cout << "sizeof(long long)=" << sizeof(long long) << std::endl;
 
     std::cout << "kaikai_test 01" << std::endl;
 

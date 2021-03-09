@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <cstring>
 #include "Shape.h"
 #include "virtual_derived.h"

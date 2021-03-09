@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <random>
 #include "ModernCpp/modernMain.h"
 #include "UseMathFunctions/useMathMain.h"
 
@@ -16,10 +17,10 @@
 #endif
 
 #ifdef WIN32
-
 int _tmain(int argc, char *argv[]) {
 #else
-    int main(int argc, char *argv[]) {
+
+int main(int argc, char *argv[]) {
 #endif
 
 //    setlocale(LC_ALL, "UTF-8");
@@ -48,13 +49,23 @@ int _tmain(int argc, char *argv[]) {
     char destChars[16];
 //    strcpy(destChars, "IamShei_abcdefghijklmnopqrstuvwxyz");
 #ifdef WIN32
-//    errno_t tmpErrNo = strcpy_s(destChars, sizeof(destChars), "IamShei_abcdefghijklmnopqrstuvwxyz");
-    errno_t tmpErrNo = strcpy_s(destChars, sizeof(destChars), "IamShei");
-    std::cout << "lookKai strcpy_s errno_t=" << tmpErrNo << std::endl;
+    //    errno_t tmpErrNo = strcpy_s(destChars, sizeof(destChars), "IamShei_abcdefghijklmnopqrstuvwxyz");
+        errno_t tmpErrNo = strcpy_s(destChars, sizeof(destChars), "IamShei");
+        std::cout << "lookKai strcpy_s errno_t=" << tmpErrNo << std::endl;
 #else
     strncpy(destChars, "IamShei", sizeof(destChars));
 #endif
-    destChars[2] = 'A' + rand() % 2;
+
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_real_distribution<double> dist(1.0, 10.0);
+    std::uniform_int_distribution<int> dist2(0, 10);
+
+    for (int i = 0; i < 10; ++i) {
+        printf("random: float=%.4f int=%d\n", dist(mt), dist2(mt));
+    }
+
+    destChars[2] = (char)('A' + dist2(mt));
     int hasSame;
     for (int idx = 0; idx < szLen; ++idx) {
         hasSame = strcmp(destChars, testChars[idx]);

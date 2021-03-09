@@ -19,17 +19,16 @@ int mainUseWinApi(int argc, char *argv[]) {
     PWSTR path;
     HRESULT result = SHGetKnownFolderPath(FOLDERID_RoamingAppData, 0, 0, &path);
 //    HRESULT result = SHGetKnownFolderPath(FOLDERID_RoamedTileImages, 0, 0, &path);
-    char *patha = "abc中文123";
     path = L"abc中文123";
     path = L"abcd\u4E2D\u65871234";
     if (result == S_OK) {
 //        std::wcout << "lookKai GetKnownFolderPath success:" << path << std::endl;
         wprintf(L"lookKai w GetKnownFolderPath success: %ls\n", path);
-        printf("lookKai GetKnownFolderPath success: %s\n", path);
+//        printf("lookKai GetKnownFolderPath success: %s\n", path);
     } else {
 //        std::wcout << "lookKai GetKnownFolderPath failed:" << result << std::endl;
         wprintf(L"lookKai w GetKnownFolderPath failed: %lu\n", result);
-        printf("lookKai GetKnownFolderPath failed: \lu\n", result);
+        printf("lookKai GetKnownFolderPath failed: %ld\n", result);
     }
     return 0;
 }

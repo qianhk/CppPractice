@@ -3,31 +3,39 @@
 //
 
 #include <iostream>
-#include <tchar.h>
-#include <Windows.h>
+#include <cstring>
 #include "ModernCpp/modernMain.h"
 #include "UseMathFunctions/useMathMain.h"
-#include "WinApi/usewinapi.h"
-#include "DllFunc/library.h"
 
-void invalidParameterErrorHandler(PCTSTR expression, PCTSTR function, PCTSTR file, unsigned int line , uintptr_t /*pReserved*/) {
-    wprintf(L"invalidParameter expresion=%s func=%s file=%s line=%d\n"
-            , expression, function, file, line);
-}
+#ifdef WIN32
+
+#include <tchar.h>
+#include "WinApi/windealcstr.h"
+#include "WinApi/usewinapi.h"
+
+#endif
+
+#ifdef WIN32
 
 int _tmain(int argc, char *argv[]) {
+#else
+    int main(int argc, char *argv[]) {
+#endif
 
 //    setlocale(LC_ALL, "UTF-8");
 //    setlocale(LC_ALL, "zh_CN.UTF-8");
-    _set_invalid_parameter_handler(invalidParameterErrorHandler);
-    _CrtSetReportMode(_CRT_ASSERT, 0);
+
 
 //    system("chcp 65001 > nul");
 
 //    system("pause");
 
-    std::cout << "sizeof(long)=" << sizeof(long) << std::endl;
+    std::cout << "sizeof(long)=" << sizeof(long) << std::endl; //win:4  mac:8
     std::cout << "sizeof(long long)=" << sizeof(long long) << std::endl;
+
+#ifdef WIN32
+    windeal_main();
+#endif
 
     std::cout << "kaikai_test 01" << std::endl;
 
@@ -35,16 +43,17 @@ int _tmain(int argc, char *argv[]) {
     std::cout << testChars[2] << std::endl;
     size_t totalLen = sizeof(testChars);
     size_t itemLen = sizeof(testChars[0]);
-    int szLen = totalLen / itemLen;
-    printf("strLen0=%u szLen=%d totalLen=%u itemLen=%u\n", strlen(testChars[0]), szLen, totalLen, itemLen);
+    int szLen = (int) (totalLen / itemLen);
+    printf("strLen0=%zu szLen=%d totalLen=%zu itemLen=%zu\n", strlen(testChars[0]), szLen, totalLen, itemLen);
     char destChars[16];
 //    strcpy(destChars, "IamShei_abcdefghijklmnopqrstuvwxyz");
-//    try {
+#ifdef WIN32
 //    errno_t tmpErrNo = strcpy_s(destChars, sizeof(destChars), "IamShei_abcdefghijklmnopqrstuvwxyz");
     errno_t tmpErrNo = strcpy_s(destChars, sizeof(destChars), "IamShei");
-//    } catch (...) {
-//        std::cout << "strcpy_s exception\n";
-//    }
+    std::cout << "lookKai strcpy_s errno_t=" << tmpErrNo << std::endl;
+#else
+    strncpy(destChars, "IamShei", sizeof(destChars));
+#endif
     destChars[2] = 'A' + rand() % 2;
     int hasSame;
     for (int idx = 0; idx < szLen; ++idx) {
@@ -54,33 +63,21 @@ int _tmain(int argc, char *argv[]) {
         }
     }
 
-    const PCWCHAR testWchar = L"abc";
+    const wchar_t *testWchar = L"abc";
     wcslen(testWchar);
-    lstrlenW(testWchar);
-    wcscmp(testWchar, L"def");
+    int cmpResult = wcscmp(testWchar, L"def");
 //    lstrcpy(testWchar, L"abc");
 //    testWchar = L"def";
 //    testWchar[1] = 'a';
     std::wcout << testWchar << hasSame << std::endl;
 
     mainModerns();
-
     mainUseMath(argc, argv);
 
+#ifdef WIN32
     mainUseWinApi(argc, argv);
-
     testInternetCrackUrl();
-
-    hello();
-
-    PWSTR path;
-    HRESULT result = getRoamingAppDataPath(&path);
-    if (result == S_OK) {
-        wprintf(L"lookKai invoke getKnownFolderPath success: %ls\n", path);
-    } else {
-        wprintf(L"lookKai invoke getKnownFolderPath failed: %lu\n", result);
-    }
-
+#endif
 //    system("pause");
 
     return 0;

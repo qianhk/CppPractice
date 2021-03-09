@@ -7,6 +7,8 @@ project(CppPractice VERSION 1.0.3)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 #ADD_DEFINITIONS(-DWIN32 -D_WIN32)
 
@@ -80,7 +82,11 @@ message("after: ${EXTRA_LIBS}")
 
 add_subdirectory(ModernCpp)
 
-add_subdirectory(DllFunc)
+if (WIN32)
+    add_subdirectory(DllFunc)
+    AUX_SOURCE_DIRECTORY(./WinApi WINAPI_DIR_SRCS)
+    set(WIN_LIBS ${WIN_LIBS} DllFunc)
+endif()
 
 #include_directories(${PROJECT_SOURCE_DIR}/ModernCpp)
 
@@ -91,10 +97,9 @@ message("USE_MATH_FUNCTION_DIR_SRCS=${USE_MATH_FUNCTION_DIR_SRCS}")
 AUX_SOURCE_DIRECTORY(. DIR_SRCS)
 message("DIR_SRCS=${DIR_SRCS}")
 
-#// main.cpp Shape.cpp Shape.h virtual_derived.h FileOperate.cpp FileOperate.h Temple.hpp Temple.h Thread.cpp Thread.h ModelCxx.cpp ModelCxx.h
-add_executable(cpp_practice ${DIR_SRCS} ${USE_MATH_FUNCTION_DIR_SRCS} WinApi/usewinapi.cpp WinApi/usewinapi.h)
+add_executable(cpp_practice ${DIR_SRCS} ${USE_MATH_FUNCTION_DIR_SRCS} ${WINAPI_DIR_SRCS})
 
-target_link_libraries(cpp_practice libModernCpp ${EXTRA_LIBS} DllFunc)
+target_link_libraries(cpp_practice libModernCpp ${EXTRA_LIBS} ${WIN_LIBS})
 
 
 install(TARGETS cpp_practice DESTINATION bin)

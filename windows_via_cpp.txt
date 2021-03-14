@@ -1,6 +1,7 @@
                         第I部分 必备知识
 
 一、错误处理
+Visual Studio：调试观察窗口：$err,hr   GetLastError
 GetLastError SetLastError
 FormatMessage
 Edit_LimitText(hwndCtl, cchMax)
@@ -27,14 +28,22 @@ IsTextUnicode
                         第II部分 工作机理
 
 四、进程
-
-
-
+GetVersionEx VerifyVersionInfo
+GetCommandLine CommandLineToArgv
+GetEnvironmentStrings GetEnvironmentVariable ExpandEnvironmentStringsW SetEnvironmentVariable
+CreateProcess main返回  ExitProcess  TerminateProcess  ExitThread
+GetExitCodeProcess  CloseHandle WaitForSingleObject
+ShellExecuteEx
+LoadIcon
+GetModuleFileName  GetModuleHandle GetModuleHandleEx
+GetCurrentDirectory SetCurrentDirectory   _wchdir _wgetcwd (推荐)
+GetFullPathName
+tlhelp32.h 枚举进程, 此.h里系列方法，如 CreateToolhelp32Snapshot
 
 
 五、作业
 
-
+QueryFullProcessImageName
 
 
 

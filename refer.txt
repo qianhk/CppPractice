@@ -1,0 +1,32 @@
+
+使用x64dbg分析微信聊天函数并实现发信息
+https://www.freebuf.com/sectool/164988.html
+https://github.com/15pb/wechat_tools
+
+PC微信逆向及50多个功能的实现
+https://blog.csdn.net/u011021711
+
+看雪知识库
+https://www.kanxue.com/chm.htm?id=9948&pid=node1000000
+
+IDA PRO新手使用教程
+https://zhuanlan.zhihu.com/p/82177268
+
+通过一个例子介绍IDA pro的简单使用
+https://zhuanlan.zhihu.com/p/80751993
+
+新手——win32程序的半生(CreateProcess)
+https://zhuanlan.zhihu.com/p/37159007
+
+Detect It Easy
+https://github.com/horsicq/Detect-It-Easy
+
+
+
+
+
+
+
+
+
+

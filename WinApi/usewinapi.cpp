@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by tianc on 2021/2/15.
 //
 
@@ -8,6 +8,7 @@
 #include <shlwapi.h>
 #include <iostream>
 #include <wininet.h>
+#include <direct.h>
 
 #pragma comment( lib, "WinInet.lib" )
 #pragma comment(lib, "shell32.lib")
@@ -19,17 +20,47 @@ int mainUseWinApi(int argc, char *argv[]) {
     PWSTR path;
     HRESULT result = SHGetKnownFolderPath(FOLDERID_RoamingAppData, 0, 0, &path);
 //    HRESULT result = SHGetKnownFolderPath(FOLDERID_RoamedTileImages, 0, 0, &path);
-    path = L"abc中文123";
-    path = L"abcd\u4E2D\u65871234";
+//    path = L"abc中文123";
+//    path = L"abcd\u4E2D\u65871234";
+    std::wstring wstr = L"abcdWstring中文defg";
+    std::wcout << "lookKai wstr=" << wstr << std::endl;
     if (result == S_OK) {
-//        std::wcout << "lookKai GetKnownFolderPath success:" << path << std::endl;
-        wprintf(L"lookKai w GetKnownFolderPath success: %ls\n", path);
+        std::wcout << "lookKai wcout GetKnownFolderPath success:" << path << std::endl;
+        wprintf(L"lookKai wprintf GetKnownFolderPath success: %ls\n", path);
 //        printf("lookKai GetKnownFolderPath success: %s\n", path);
     } else {
 //        std::wcout << "lookKai GetKnownFolderPath failed:" << result << std::endl;
         wprintf(L"lookKai w GetKnownFolderPath failed: %lu\n", result);
         printf("lookKai GetKnownFolderPath failed: %ld\n", result);
     }
+
+    SYSTEM_INFO info{0};
+    GetSystemInfo(&info);
+    OSVERSIONINFOEX os{0};
+    os.dwOSVersionInfoSize = sizeof(os);
+    if (GetVersionEx((OSVERSIONINFO *) &os)) {
+    } else {
+        std::cout << "GetVersionEx failed=%ld\n" << GetLastError();
+    }
+    LPWSTR commandLine = GetCommandLine();
+    int numArgs = 0;
+    LPWSTR *cmdArgvs = CommandLineToArgvW(commandLine, &numArgs);
+    LPWCH envStr = GetEnvironmentStrings();
+    LPTSTR lpszVariable;
+    for (lpszVariable = (LPTSTR) envStr; *lpszVariable; lpszVariable++) {
+        int lineCount = wcslen(lpszVariable);
+//        std::wcout << lpszVariable << std::endl;
+        lpszVariable += lineCount;
+//        while (*lpszVariable)
+//            putchar(*lpszVariable++);
+//        putchar('\n');
+    }
+    WCHAR envVar[MAX_PATH];
+    DWORD dwResult = GetEnvironmentVariable(L"APPDATA", envVar, _countof(envVar));
+    wprintf(L"GetEnvironmentVariable result=%u %ls\n", dwResult, envVar);
+    ExpandEnvironmentStringsW(L"%USERPROFILE%/Test", envVar, _countof(envVar));
+    wprintf(L"ExpandEnvironmentStringsW result=%u %ls\n", dwResult, envVar);
+    _wchdir(L"c:\\temp");
     return 0;
 }
 

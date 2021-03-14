@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
     windeal_main();
 #endif
 
-    std::cout << "kaikai_test 01" << std::endl;
+    std::cout << "kaikai_test 011" << std::endl;
 
     const char testChars[][16] = {"kaichars1", "kaikaiChars2", "kaikaikaiChars3", "kaikai04"};
     std::cout << testChars[2] << std::endl;

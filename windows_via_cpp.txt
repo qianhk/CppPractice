@@ -12,6 +12,7 @@ GetDlgItemInt SetDlgItemInt
 LoadLibraryEx
 DialogBoxParam
 
+
 二、字符和字符串处理
 使用unicode处理字符串, UNICODE _UNICODE 宏同时指定 前者windows用的，后者C运行库用
 _countof(szBuffer)
@@ -23,6 +24,7 @@ wcscmp wcscpy  _s函数
 CompareStringOrdinal 最后一个参数ignoreCase，返回CSTR_EQUAL表示相同
 IsTextUnicode
 
+
 三、内核对象
 
                         第II部分 工作机理
@@ -31,12 +33,12 @@ IsTextUnicode
 GetVersionEx VerifyVersionInfo
 GetCommandLine CommandLineToArgv
 GetEnvironmentStrings GetEnvironmentVariable ExpandEnvironmentStringsW SetEnvironmentVariable
-CreateProcess main返回  ExitProcess  TerminateProcess  ExitThread
+CreateProcess main返回  ExitProcess  TerminateProcess
 GetExitCodeProcess  CloseHandle WaitForSingleObject
 ShellExecuteEx
 LoadIcon
 GetModuleFileName  GetModuleHandle GetModuleHandleEx
-GetCurrentDirectory SetCurrentDirectory   _wchdir _wgetcwd (推荐)
+GetCurrentDirectory  SetCurrentDirectory   _wchdir _wgetcwd (推荐)
 GetFullPathName
 tlhelp32.h 枚举进程, 此.h里系列方法，如 CreateToolhelp32Snapshot
 
@@ -46,15 +48,45 @@ tlhelp32.h 枚举进程, 此.h里系列方法，如 CreateToolhelp32Snapshot
 QueryFullProcessImageName
 
 
-
 六、线程基础
+DWORD WINAPI ThreadFunc(PVOID pvParam) {
+    return 0;
+}
 
+CreateThread
+线程执行完了自行return  ExitThread   TerminateThread WaitForSingleObject
+_beginthreadex    _endthreadex
+GetExitCodeThread
+GetCurrentProcessId   GetCurrentThreadId
 
-
+GetCurrentProcess  GetCurrentThread 伪句柄 pseudohandle
+GetProcessTimes  GetThreadTimes
+伪句柄转成真正句柄 DuplicateHandle 用完后需CloseHandle
 
 
 七、线程调度、优先级和关联性
+GetSystemTimeAdjustment
+SuspendThread  ResumeThread
+Sleep(ms)  SwitchToThread
 
+GetTickCount64() 包含线程被别人抢占的时间
+GetThreadTimes  不含被中断时间（精度100ns）
+QueryThreadCycleTime 不含被中断时间, 但与cpu频率相关，且频率通常会变化
+
+GetThreadContext 各个寄存器的值
+RAX EAX AX AL
+RCX 在循环和串操作中充当计数器，指令执行后CX内容自动修改，因此称为计数寄存器
+RBP 基址指针寄存器 当前函数的栈空间基地址
+RSP 堆栈指针寄存器 当前函数为被调用函数准备的栈空间的基地址
+RSI( Source Index register) 源变址寄存器
+RDI( Destination Index Register) 目的变址寄存器
+RIP 指令指针寄存器
+FR 标志寄存器
+
+C:\> START /LOW calc.exe 我试了没用
+SetThreadPriority  GetThreadPriority
+SetProcessPriorityBoost SetThreadPriorityBoost 是否禁止系统自动提升线程优先级
+SetFileInformationByHandle
 
 
 

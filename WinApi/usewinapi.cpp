@@ -61,6 +61,11 @@ int mainUseWinApi(int argc, char *argv[]) {
     ExpandEnvironmentStringsW(L"%USERPROFILE%/Test", envVar, _countof(envVar));
     wprintf(L"ExpandEnvironmentStringsW result=%u %ls\n", dwResult, envVar);
     _wchdir(L"c:\\temp");
+
+    CONTEXT context{};
+    context.ContextFlags = CONTEXT_FULL;
+    GetThreadContext(GetCurrentThread(), &context);
+
     return 0;
 }
 

@@ -31,8 +31,9 @@ int main(int argc, char *argv[]) {
 
 //    system("pause");
 
+    std::cout << "sizeof(int)=" << sizeof(int) << std::endl; //win:4  mac:
     std::cout << "sizeof(long)=" << sizeof(long) << std::endl; //win:4  mac:8
-    std::cout << "sizeof(long long)=" << sizeof(long long) << std::endl;
+    std::cout << "sizeof(long long)=" << sizeof(long long) << std::endl; //win:8  mac:
 
 #ifdef WIN32
     windeal_main();

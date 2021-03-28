@@ -54,7 +54,7 @@ DWORD WINAPI ThreadFunc(PVOID pvParam) {
 }
 
 CreateThread
-线程执行完了自行return  ExitThread   TerminateThread WaitForSingleObject
+线程执行完了自行return  ExitThread   TerminateThread WaitForSingleObject WaitForMultipleObjects  微秒 INFINITE
 _beginthreadex    _endthreadex
 GetExitCodeThread
 GetCurrentProcessId   GetCurrentThreadId
@@ -72,6 +72,9 @@ Sleep(ms)  SwitchToThread
 GetTickCount64() 包含线程被别人抢占的时间
 GetThreadTimes  不含被中断时间（精度100ns）
 QueryThreadCycleTime 不含被中断时间, 但与cpu频率相关，且频率通常会变化
+QueryPerformanceFrequency QueryPerformanceCounter 高精度，假设线程不会被抢占，为简化使用可创建自定义类 CStopwatch
+https://github.com/qianhk/Windows-via-Cpp/blob/main/08-UserSyncCompare/UserSyncCompare.cpp
+
 
 GetThreadContext 各个寄存器的值
 RAX EAX AX AL
@@ -89,18 +92,38 @@ SetProcessPriorityBoost SetThreadPriorityBoost 是否禁止系统自动提升线
 SetFileInformationByHandle
 
 
-
-
 八、用户模式下的线程同步
+InterlockedExchangeAdd
+InterlockedExchangeAdd64
+InterlockedIncrement InterlockedDecrement 原子加减1
+InterlockedExchange 64 Pointer
+InterlockedPushEntrySList FlushSList 等InterlockedXxx函数
 
+关键段 critical section
+CRITICAL_SECTION g_cs;
+InitializeCriticalSection(&g_cs);  InitializeCriticalSectionAndSpinCount
+EnterCriticalSection(&g_cs);     TryEnterCriticalSection
+LeaveCriticalSection(&g_cs);
+DeleteCriticalSection(&g_cs);
 
+Slim读/写锁
+InitializeSRWLock
+AcquireSRWLockExclusive   AcquireSRWLockShared
+ReleaseSRWLockExclusive   ReleaseSRWLockShared
+ReleaseSRWLock
 
+条件变量
+SleepConditionVariableCS  SleepConditionVariableSRW
+WakeConditionVariable   WakeAllConditionVariable
+
+同时访问多个锁的几个线程需用相同的顺序取得锁，不然可能死锁，比如锁1锁2，线程1先获得锁1再尝试锁2，线程2先获得锁2再尝试锁1。
 
 
 九、用内核对象进行线程同步
-
-
-
+WaitForSingleObject 返回  WAIT_OBJECT_0  WAIT_TIMEOUT  WAIT_FAILED
+WaitForMultipleObjects  微秒 INFINITE
+WaitForXXX等待成功时会导致自动重置事件内核对象重置为未触发
+WaitForXXX是以原子方式工作的
 
 
 十、同步设备I/O与异步设备I/O

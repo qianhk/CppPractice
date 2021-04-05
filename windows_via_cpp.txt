@@ -124,12 +124,37 @@ WaitForSingleObject 返回  WAIT_OBJECT_0  WAIT_TIMEOUT  WAIT_FAILED
 WaitForMultipleObjects  微秒 INFINITE
 WaitForXXX等待成功时会导致自动重置事件内核对象重置为未触发
 WaitForXXX是以原子方式工作的
-
+CreateEvent CreateEventEx OpenEvent SetEvent ResetEvent PulseEvent
+CreateWaitableTimer OpenWaitableTimer SetWaitableTimer CancelWaitableTimer
+CreateSemaphore CreateSemaphoreEx OpenSemaphore ReleaseSemaphore
+CreateMutex CreateMutexEx OpenMutex ReleaseMutex 遗弃问题WAIT_ABANDONED
+其它线程同步函数：WaitForInputIdle MsgWaitForMultipleObjects(Ex) WaitForDebugEvent SignalObjectAndWait
+等待链遍历API检测死锁：RegisterWaitChainCOMCallback OpenThreadWaitChainSession CloseThreadWaitChainSession GetThreadWaitChain
 
 十、同步设备I/O与异步设备I/O
+CreateFile 7个参数 失败返回INVALID_HANDLE_VALUE 而不是NULL
+CreateMailslot CreateNamedPipe CreatePipe Socket accept(Ex) CreateConsoleScreenBuffer GetStdHandle
+串口波特率 SetCommConfig
+超时值:SetMailslotInfo
+CloseHandle  closesocket
+GetFileType
 
+文件：
+GetFileSizeEx 逻辑大小
+GetCompressedFileSize 磁盘实际占用大小
+ReadFile WriteFile
+SetFilePointerEx
+SetEndOfFile
+FlushFileBuffers
+CancelSynchronousIo取消同步I/O，是否能真正取消取决于驱动程序
 
-
+异步设备I/O:
+OVERLAPPED
+HasOverlappedIoCompleted
+CancelIo CancelIoEx
+GetOverlappedResult
+可提醒I/O
+I/O完成端口
 
 
 十一、Windows线程池

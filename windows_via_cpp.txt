@@ -158,53 +158,118 @@ I/O完成端口
 
 
 十一、Windows线程池
+异步方式调用函数：
+TrySubmitThreadpoolCallback
+CreateThreadpoolWork  SubmitThreadpoolWork WaitForThreadpoolWorkCallbacks CloseThreadpoolWork
 
+每隔一段时间调用一个函数：
+CreateThreadpoolTimer
+SetThreadpoolTimer
+IsThreadpoolTimerSet
+WaitForThreadpoolTimerCallbacks
+CloseThreadpoolTimer
 
+在内核对象触发时调用一个函数：
+CreateThreadpoolWait
+SetThreadpoolWait
+WaitForThreadpoolWaitCallbacks
+CloseThreadpoolWait
 
+异步I/O请求完成时调用一个函数：
+CreateThreadpollIo
+StartThreadpoolIo
+CancelThreadpoolIo
+WaitForThreadpoolIoCallbacks
+CloseThreadpoolIo
+
+回调函数的终止：
+LeaveCriticalSectionWhenCallbackReturns
+ReleaseMutexWhenCallbackReturns
+ReleaseSemaphoreWhenCallbackReturns
+SetEventWhenCallbackReturns
+FreeLibraryWhenCallbackReturns
+CallbackMayRunLong
+DisassociateCurrentThreadFromCallback
+
+对线程池进行定制：
+CreateThreadpool
+SetThreadpoolThreadMinimum SetThreadpoolThreadMaxium
+CloseThreadpool
+InitializeThreadpoolEnvironment
+DestroyThreadpoolEnvironment
+SetThreadpoolCallbackPool
+SetThreadpoolCallbackRunsLong
+SetThreadpoolCallbackLibrary
+
+清理组:
+CreateThreadpoolCleanupGroup
+SetThreadpoolCallbackCleanupGroup
+CloseThreadpoolCleanupGroupMembers
+CloseThreadpoolCleanupGroup
 
 
 十二、纤程
-
-
-
+ConvertThreadToFiber(Ex)
+CreateFiber(Ex)
+SwitchToFiber
+DeleteFiber
+GetCurrentFiber
+GetFiberData
+IsThreadAFiber
 
 
                         第III部分 内存管理
 
 十三、Windows内存体系结构
-
-
-
+__unaligned  UNALIGNED  UNALIGNED64
+VirtualAlloc 预订(resering)        VirtualFree
+分配粒度  64KB  起始地址
+大小 x86 x64 4KB  IA-64 8KB
+PEB (process environment block)   TEB (thread environment block)
 
 
 十四、探索虚拟内存
-
-
-
+GetSystemInfo  GetNativeSystemInfo
+GetLogicalProcessorInformation
+IsWow64Process
+GlobalMemoryStatus(Ex)
+GetProcessMemoryInfo
+VirtualQuery(Ex)
 
 
 十五、在应用程序中使用虚拟内存
-
-
-
+VirtualAlloc  VirtualFree
+VirtualProtect
+AllocateUserPhysicalPages
 
 
 十六、线程栈
-
-
-
+EXCEPTION_STACK_OVERFLOW
+SetThreadStackGuarante
+_resetstkoflw
 
 
 十七、内存映射文件
+共享段:
+#pragma data_seg("Shared")
+volatile LONG g_lApplicationInstances = 0;
+#pragma data_seg()
+#pragma comment(linker, "/Section:Shared,RWS")
 
+g_uMsgAppInstCountUpdate = RegisterWindowMessage(TEXT("MsgAppInstCountUpdate"));
+PostMessage(HWND_BROADCAST, g_uMsgAppInstCountUpdate, 0, 0);
 
-
+CreateFile CreateFileMapping MapViewOfFile UnmapViewOfFile FlushViewOfFile closeHandle closeHandle
 
 
 十八、堆
-
-
-
+HeapCreate HeapAlloc HeapReAlloc
+HeapSize
+HeapFree
+HeapDestroy
+Heap32First Heap32Next Heap32ListFirst Heap32ListNext
+GetProcessHeaps
+HeapValidate HeapCompact HeapLock HeapUnlock HeapWalk
 
 
                         第IV部分 动态链接库

@@ -7,6 +7,7 @@
 #include <random>
 #include "ModernCpp/modernMain.h"
 #include "UseMathFunctions/useMathMain.h"
+#include "ModernCpp/leftright.h"
 
 #ifdef WIN32
 
@@ -31,9 +32,9 @@ int main(int argc, char *argv[]) {
 
 //    system("pause");
 
-    std::cout << "sizeof(int)=" << sizeof(int) << std::endl; //win:4  mac:
+    std::cout << "sizeof(int)=" << sizeof(int) << std::endl; //win:4  mac:4
     std::cout << "sizeof(long)=" << sizeof(long) << std::endl; //win:4  mac:8
-    std::cout << "sizeof(long long)=" << sizeof(long long) << std::endl; //win:8  mac:
+    std::cout << "sizeof(long long)=" << sizeof(long long) << std::endl; //win:8  mac:8
 
 #ifdef WIN32
     windeal_main();
@@ -90,6 +91,7 @@ int main(int argc, char *argv[]) {
     mainUseWinApi(argc, argv);
     testInternetCrackUrl();
 #endif
+    mainLeftRight();
 //    system("pause");
 
     return 0;

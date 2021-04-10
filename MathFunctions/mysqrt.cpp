@@ -8,6 +8,6 @@
 #include "Table.h"
 
 double mysqrt(double input) {
-    fprintf(stdout, "in MathFunctions library: mysqrt input %g tableSize=%llu\n", input, sizeof(sqrtTable) / sizeof(sqrtTable[0]));
+    fprintf(stdout, "in MathFunctions library: mysqrt input %g tableSize=%lu\n", input, sizeof(sqrtTable) / sizeof(sqrtTable[0]));
     return sqrt(input);
 }

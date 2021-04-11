@@ -275,56 +275,101 @@ HeapValidate HeapCompact HeapLock HeapUnlock HeapWalk
                         第IV部分 动态链接库
 
 十九、DLL基础
+Kernel32.dll  User32.dll  GDI32.dll
+AdvAPI32.dll ComDlg32.dll
 
+.h
+#ifdef XXXLIBAPI
+#else
+#define XXXLIBAPI extern "C" __declspec(dllimport)
+#endif
 
+.cpp
+#define XXXLIBAPI extern "C" __declspec(dllexport)
+#include "XxxLib.h"
 
+dumpbin -exports kernel32.dll
+dumpbin -imports DllFuncd.dll
 
 
 二十、DLL高级技术
-
-
-
+LoadLibrary(Ex)  FreeLibrary(Ex)  FreeLibraryAndExitThread
+SetDllDirectory
+HMODULE=GetModuleHandle(L"xxx.dll")  GetModuleFileName(HMODULE)
+GetProcAddress
+DisableThreadLibraryCalls(HMODULE)
+rebase工具 bind工具
 
 
 二十一、线程局部存储区
-
-
-
+DWORD=TlsAlloc()  TlsSetValue  TlsGetValue  TlsFree
+__declspec(thread) DWORD gt_dwStartTime = 0;
 
 
 二十二、DLL注入和API拦截
-
-
-
+1. 使用注册表注入Dll:
+        HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Windows\
+        AppInit_Dlls   LoadAppInit_Dlls:DWORD:1
+2. 使用Windows挂钩来注入Dll:
+        HHOOK hHook = SetWindowsHookEx(WH_GETMESSAGE, GetMsgProc, hInstDll, 0)
+        UnhookWindowsHookEx
+3. 使用远程线程来注入Dll:
+        CreateRemoteThread VirtualAllocEx VirtualFreeEx  ReadProcessMemory  WriteProcessMemory
+4. 替换exe必然会加载的dll，再用函数转发器导出原来的所有符号
+5. 使用CreateProcess来注入代码
+6. 修改模块导入段来拦截API
+7. Detours
 
 
                         第V部分 结构化异常处理
 
 二十三、中止处理程序
+SEH (Structured Exception Handling)
 
-
-
+__try {
+if (xxx) { __leave; }
+}
+__excep (EXCEPTION_EXECUTE_HANDLER) {
+}
+__excep {}
+__finally {
+BOOL abnormalTermination();
+}
 
 
 二十四、异常处理程序与软件异常
-
-
-
+EXCEPTION_EXECUTE_HANDLER
+EXCEPTION_CONTINUE_EXECUTION
+EXCEPTION_CONTINUE_SEARCH
+GetExceptionCode GetExceptionInformation
+RaiseException
 
 
 二十五、未处理异常、向量化异常处理与C++异常
-
-
-
+SetUnhandledExceptionFilter
+即时调试: vsjitdebugger.exe
+AddvectoredExceptionHandler
+RemoveVectoredExceptionHandler
+首次机会通知:first-chance notification
+最后机会通知:last-chance notification
 
 
 二十六、错误报告与应用程序恢复
-
-
-
+WER (Windows Error Reporting)
+WerSetFlags WerGetFlags
+WerAddExcludedApplication WerRemoveExcludedApplication
+WerRegisterMemoryBlock  WerRegisterFile  WerUnregisterMemoryBlock  WerUnregisterFile
+WerReportCreate WerReportSetParameter WerReportAddDump WerReportAddFile WerReportSetUIOption WerReportSubmit WerReportCloseHandle
+RegisterApplicationRestart  RegisterApplicationRecoveryCallback
 
 
                         第VI部分
 
 附录A 构建环境
+宏：chBEGINTHREADEX
+DebugBreak改进：自己创建inline函数，里面一个汇编指令：int 3
+
 附录B 消息处理宏、子控件宏和API宏
+LOWORD HIWORD LOBYTE HIBYTE
+MAKEWPARAM
+ListBox_GetCount

@@ -13,3 +13,9 @@ nmake install
 cpack -G ZIP
 cpack --config CPackSourceConfig.cmake -G 7Z
 
+复杂声明
+!(.复杂声明.jpg)
+
+void (*pf)(char *) 指向函数的指针变量
+typedef void (*PF)(char *) 函数指针类型
+

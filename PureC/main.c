@@ -9,6 +9,22 @@
 
 _Thread_local int tValue = 3; //每个线程都获得该变量的私有备份
 
+typedef struct Book {
+    char title[16];
+    char author[16];
+    float value;
+} BOOK, *PBOOK;
+
+//位字段：
+struct {
+    unsigned int a : 1;
+    unsigned int   : 1;
+    unsigned int   : 0; //迫使下一字段与下一个整数对齐
+    unsigned int b : 2;
+    unsigned int c : 2;
+    unsigned int d : 8;
+} bitStruct;
+
 int main(void) {
     const int maxCount = 3;
     int testValue = INT_MAX;
@@ -65,6 +81,12 @@ int main(void) {
     atomic_store(&hogs, 12);
     printf("hogs=%d\n", hogs);
 
+    struct Book book1 = {"Title 1", "Author1", 1.1f};
+    struct Book book2 = {.value = 1.3f, .title="Title 2", "Author2", 2.2f}; //对同一个变量赋值以后面的为准
+    BOOK book3 = {"Title 3", "Author3", 3.3f};
+    PBOOK pBook1 = &book1, pBook2 = &book2, pBook3 = &book3;
+
+
     return 0;
 }
 
@@ -85,5 +107,16 @@ int main(void) {
  islower isalnum isalpha iscntrl isdigit isgraph islower isprint ispunct isspace isupper isxdigit toupper
  atoi   strtol
  atof   atol  strtol strtoul  strtod
+
+ fopen fseek fflush fgetpos fsetpos feof fclose ferror
+ getc putc exit fprintf fscanf fgets fputs rewind ftell
+ ungetc setvbuff fread fwrite
+
+ 按位取反 ~     与 &       或 |     异或 ^
+ 设置位 flags |= MASK mask为1保留   清空位  flags &= ~MASK mask为1清空   切换位 flags ^= MASK mask中为1的切换
+ 检查为的值  if ( (flags & MASK) == MASK)
+ number << 1 左移1位乘2   >> 1 右移一位除2
+
+
 
  */

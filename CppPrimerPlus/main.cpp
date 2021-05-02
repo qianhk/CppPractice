@@ -8,6 +8,7 @@
 #include "baseclass.h"
 
 extern int gTestValue;
+//extern const int gTestConstValue2;
 
 int main() {
 
@@ -46,12 +47,17 @@ int main() {
     std::cout << std::endl;
 
     printf("clock per sec: %d\n", CLOCKS_PER_SEC);
-    clock_t delay = 3 * CLOCKS_PER_SEC;
+    clock_t delay = 1 * CLOCKS_PER_SEC;
     clock_t start = clock();
     while (clock() - start < delay) {
         --delay, ++delay;
     }
     std::cout << "after clock\n";
+
+    outputTestConstValueInfo();
+    printf("&gTestValue in Main: %p\n", &gTestValue);
+    printf("&gTestConstValue in Main: %p\n", &gTestConstValue);
+    printf("&gTestConstValue2 in Main: %p\n", &gTestConstValue2);
 
     return 0;
 }

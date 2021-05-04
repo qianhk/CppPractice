@@ -13,3 +13,11 @@ void outputTestConstValueInfo() {
     printf("&gTestConstValue in baseClass: %p\n", &gTestConstValue);
     printf("&gTestConstValue2 in baseClass: %p\n", &gTestConstValue2);
 }
+
+template<>
+void kaicpp::kaiswap(int &a, int &b) {
+    printf("kaiswap custom version a=%d b=%d\n", a, b);
+    int t = a;
+    a = b;
+    b = t;
+}

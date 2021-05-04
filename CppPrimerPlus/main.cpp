@@ -47,7 +47,7 @@ int main() {
     std::cout << std::endl;
 
     printf("clock per sec: %d\n", CLOCKS_PER_SEC);
-    clock_t delay = 1 * CLOCKS_PER_SEC;
+    clock_t delay = 0.1 * CLOCKS_PER_SEC;
     clock_t start = clock();
     while (clock() - start < delay) {
         --delay, ++delay;
@@ -59,6 +59,13 @@ int main() {
     printf("&gTestConstValue in Main: %p\n", &gTestConstValue);
     printf("&gTestConstValue2 in Main: %p\n", &gTestConstValue2);
 
+    int ia = 1, ib = 2, ic = 3, id = 4;
+    float fa = 10.1, fb = 20.2;
+    kaicpp::kaiswap(ia, ib);
+    kaicpp::kaiswap(fa, fb);
+    kaicpp::kaiswap(ic, id);
+    printf("ia=%d ib=%d fa=%.1f fb=%.1f ic=%d id=%d\n", ia, ib, fa, fb, ic, id);
+    kaicpp::ft(ia, fa);
     return 0;
 }
 

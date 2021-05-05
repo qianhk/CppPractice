@@ -76,7 +76,7 @@ int main() {
 
     kaicpp::BaseClass baseClass(10);
     noNeedInt = baseClass.Months;
-    noNeedInt = baseClass.MONTHS;
+    noNeedInt = kaicpp::BaseClass::MONTHS;
     noNeedInt = kaicpp::BaseClass::TestM::Months;
 
     baseClass.costs;
@@ -90,6 +90,9 @@ int main() {
     kaicpp::BaseClass baseClass3 = baseClass; //有可能是复制构造后再赋值，取决于编译器的实现
     baseClass3.setTestValue(42);
     baseClass2 = baseClass3;
+    char &c = baseClass2[3];
+    baseClass3 = 82;
+    baseClass3 = baseClass3;
 
     return 0;
 }

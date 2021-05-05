@@ -20,5 +20,6 @@ namespace kaicpp {
         decltype(x + y) xpy = x + y;
         cout << "x=" << x << " y=" << y << " result=" << xpy << endl;
     }
+
 }
 #endif

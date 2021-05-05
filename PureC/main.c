@@ -57,11 +57,13 @@ struct {
 float mysqrtf(float v) {
     float result = sqrtf(v);
     printf("mysqrtf v=%.4f result=%.4f\n", v, result);
+    return result;
 }
 
 double mysqrt(double v) {
     double result = sqrt(v);
     printf("mysqrt v=%.8f result=%.8f\n", v, result);
+    return result;
 }
 
 #define SQRT(X) _Generic((X), float : mysqrtf, default : mysqrt)(X)

@@ -9,6 +9,8 @@
 
 extern int gTestValue;
 //extern const int gTestConstValue2;
+namespace kaicppsub2 = kaicpp::subns::subns2;
+using std::endl;
 
 int main() {
 
@@ -59,13 +61,36 @@ int main() {
     printf("&gTestConstValue in Main: %p\n", &gTestConstValue);
     printf("&gTestConstValue2 in Main: %p\n", &gTestConstValue2);
 
-    int ia = 1, ib = 2, ic = 3, id = 4;
+    int ia = 1, ib = 2, ic = 3, id = 4, ie = kaicpp::subns::subns2::innerValue, ig = kaicppsub2::innerValue;
     float fa = 10.1, fb = 20.2;
     kaicpp::kaiswap(ia, ib);
     kaicpp::kaiswap(fa, fb);
     kaicpp::kaiswap(ic, id);
     printf("ia=%d ib=%d fa=%.1f fb=%.1f ic=%d id=%d\n", ia, ib, fa, fb, ic, id);
     kaicpp::ft(ia, fa);
+    float result = kaicpp::testAutoResult(ie, fa);
+    result = kaicpp::testAutoResult(ig, fa);
+    int noNeedInt = kaicpp::MONTHS;
+    noNeedInt = kaicpp::ENum2;
+    noNeedInt = kaicpp::TestEnum::Enum1;
+
+    kaicpp::BaseClass baseClass(10);
+    noNeedInt = baseClass.Months;
+    noNeedInt = baseClass.MONTHS;
+    noNeedInt = kaicpp::BaseClass::TestM::Months;
+
+    baseClass.costs;
+    noNeedInt = int(kaicpp::egg::Media); //类作用域内的枚举不能隐式转换
+    noNeedInt = static_cast<int>(kaicpp::tshirt::Large);
+//    kaicpp::BaseClass baseClass2 = 10;// 构造函数加了explicit后必须显示转换
+    std::cout << baseClass << endl;
+    baseClass << std::cout << endl;
+    noNeedInt = static_cast<int>(baseClass);
+    kaicpp::BaseClass baseClass2(baseClass);
+    kaicpp::BaseClass baseClass3 = baseClass; //有可能是复制构造后再赋值，取决于编译器的实现
+    baseClass3.setTestValue(42);
+    baseClass2 = baseClass3;
+
     return 0;
 }
 

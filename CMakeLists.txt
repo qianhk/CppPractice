@@ -13,6 +13,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 #ADD_DEFINITIONS(-DWIN32 -D_WIN32)
 
+add_compile_options(-Wno-unused-variable -Wno-unused-parameter -Wno-unused-value)
+
 add_subdirectory(PureC)
 add_subdirectory(CppPrimerPlus)
 
@@ -89,7 +91,7 @@ if (WIN32)
     add_subdirectory(DllFunc)
     AUX_SOURCE_DIRECTORY(./WinApi WINAPI_DIR_SRCS)
     set(WIN_LIBS ${WIN_LIBS} DllFunc)
-endif()
+endif ()
 
 #include_directories(${PROJECT_SOURCE_DIR}/ModernCpp)
 

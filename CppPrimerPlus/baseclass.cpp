@@ -27,7 +27,8 @@ auto kaicpp::testAutoResult(int x, float y) -> decltype(x + y) {
     return x + y;
 }
 
-kaicpp::BaseClass::BaseClass(int testValue) : mTestValue(testValue) {
+//成员数据被初始化顺序与他们出现在类声明中的顺序相同，与初始化器(成员初始化列表)中的排列顺序无关
+kaicpp::BaseClass::BaseClass(int testValue) : /*mTestValue2(2), */ mTestValue(testValue) {
     ++sJs;
     std::cout << "BaseClass(int) js=" << sJs << " _value=" << testValue << std::endl;
     strcpy(mCity, "BaseClass(int)");

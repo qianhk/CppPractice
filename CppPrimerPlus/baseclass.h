@@ -47,8 +47,8 @@ namespace kaicpp {
         enum TestM {
             Months = 12
         };
-        double costs[MONTHS];
-        double costs2[Months];
+        double costs[MONTHS]{};
+        double costs2[Months] = {};
 
         void setTestValue(int testValue);
 
@@ -73,8 +73,9 @@ namespace kaicpp {
         friend std::ostream &operator<<(std::ostream &os, const BaseClass &c); //全局函数重载<<
 
     private:
-        char mCity[40];
+        char mCity[40] = "initCity";
         int mTestValue;
+        int mTestValue2 = 1; //C++ 11 可直接在此处初始化: 类内初始化 in-class initialization
         static int sJs;
     };
 

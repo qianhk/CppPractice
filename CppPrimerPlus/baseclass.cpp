@@ -30,6 +30,7 @@ auto kaicpp::testAutoResult(int x, float y) -> decltype(x + y) {
 //成员数据被初始化顺序与他们出现在类声明中的顺序相同，与初始化器(成员初始化列表)中的排列顺序无关
 kaicpp::BaseClass::BaseClass(int testValue) : /*mTestValue2(2), */ mTestValue(testValue) {
     ++sJs;
+    ++sTotalJs;
     std::cout << "BaseClass(int) js=" << sJs << " _value=" << testValue << std::endl;
     strcpy(mCity, "BaseClass(int)");
 }
@@ -51,6 +52,7 @@ kaicpp::BaseClass::operator int() const {
 
 kaicpp::BaseClass::BaseClass(const kaicpp::BaseClass &other) {
     ++sJs;
+    ++sTotalJs;
     std::cout << "CopyConstruct_js=" << sJs << " other.value=" << other.mTestValue << std::endl;
     strcpy(mCity, "BaseClass(const BaseClass&)");
     mTestValue = other.mTestValue;
@@ -108,12 +110,38 @@ char &kaicpp::BaseClass::operator[](int i) {
 }
 
 int kaicpp::BaseClass::sJs = 0;
+int kaicpp::BaseClass::sTotalJs = 0;
 
 kaicpp::BaseClass::~BaseClass() {
-    printf("~BaseClass() js=%d value=%d city=%s\n", sJs, mTestValue, mCity);
+    printf("~BaseClass() js=%d totalJs=%d value=%d city=%s\n", sJs, sTotalJs, mTestValue, mCity);
     --sJs;
 }
 
 const kaicpp::BaseClass kaicpp::BaseClass::operator+(const kaicpp::BaseClass &r) const {
     return kaicpp::BaseClass(mTestValue + r.mTestValue);
 }
+
+kaicpp::DerivedClass::DerivedClass() : BaseClass(1010) {
+    printf("%s\n", __FUNCTION__ );
+}
+
+void kaicpp::BaseClass::printInfoVirtual() {
+    printf("BaseClass %s\n", __FUNCTION__ );
+}
+
+void kaicpp::BaseClass::printInfoNoVirtual() {
+    printf("BaseClass %s\n", __FUNCTION__ );
+}
+
+void kaicpp::DerivedClass::printInfoVirtual() {
+    printf("DerivedClass %s\n", __FUNCTION__ );
+}
+
+void kaicpp::DerivedClass::printInfoNoVirtual() {
+    printf("DerivedClass %s\n", __FUNCTION__ );
+}
+
+kaicpp::DerivedClass::~DerivedClass() {
+    printf("%s\n", __FUNCTION__ );
+}
+

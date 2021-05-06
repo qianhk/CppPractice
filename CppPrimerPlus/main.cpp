@@ -99,7 +99,27 @@ int main() {
     baseClass4 = baseClass + baseClass3;
     std::cout << "----------------3-------------\n";
 //    baseClass + baseClass2 = baseClass4;
-    std::cout << "----------------4-------------\n";
+    std::cout << "----------------class-------------\n";
+    baseClass.printInfoVirtual();
+    baseClass.printInfoNoVirtual();
+    kaicpp::DerivedClass derivedClass;
+    derivedClass.printInfoVirtual();
+    derivedClass.printInfoNoVirtual();
+    std::cout << "----------------pointer normal------------\n";
+    kaicpp::BaseClass *pBaseClass = &baseClass;
+    kaicpp::DerivedClass *pDerivedClass = &derivedClass;
+    pBaseClass->printInfoVirtual();
+    pBaseClass->printInfoNoVirtual();
+    pDerivedClass->printInfoVirtual();
+    pDerivedClass->printInfoNoVirtual();
+    std::cout << "----------------pointer derived -> error ------------\n";
+    pDerivedClass = (kaicpp::DerivedClass *)pBaseClass; //正常开发中禁止这样使用
+    pDerivedClass->printInfoVirtual(); //BaseClass printInfoVirtual
+    pDerivedClass->printInfoNoVirtual(); //此错误示例把base强制转给了derived， DerivedClass printInfoNoVirtual
+    std::cout << "----------------pointer base -> derived ------------\n";
+    pBaseClass = &derivedClass;
+    pBaseClass->printInfoVirtual(); //DerivedClass printInfoVirtual
+    pBaseClass->printInfoNoVirtual(); //BaseClass printInfoNoVirtual
     return 0;
 }
 

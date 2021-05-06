@@ -52,6 +52,9 @@ namespace kaicpp {
 
         void setTestValue(int testValue);
 
+        virtual void printInfoVirtual();
+        void printInfoNoVirtual();
+
     public:
         std::ostream &operator<<(std::ostream &os); //成员函数重载<<
         explicit operator int() const; //转换函数
@@ -77,6 +80,7 @@ namespace kaicpp {
         int mTestValue;
         int mTestValue2 = 1; //C++ 11 可直接在此处初始化: 类内初始化 in-class initialization
         static int sJs;
+        static int sTotalJs;
     };
 
     enum class egg { //不加class编译不过，属于相同的作用域
@@ -84,6 +88,16 @@ namespace kaicpp {
     };
     enum class tshirt { //不加class编译不过，属于相同的作用域，限制作用域在类里
         Small, Media, Large, Xlarge
+    };
+
+    class DerivedClass : public BaseClass {
+    public:
+        DerivedClass();
+        virtual ~DerivedClass();
+        void printInfoVirtual() override;
+
+        //与基类同名同参数函数，将会隐藏基类的函数，即使是指针调用也直接根据指针当前类型调用对应函数，不走虚函数表
+        void printInfoNoVirtual(); //正常开发中不要这样使用
     };
 }
 

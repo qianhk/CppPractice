@@ -93,7 +93,13 @@ int main() {
     char &c = baseClass2[3];
     baseClass3 = 82;
     baseClass3 = baseClass3;
-
+    std::cout << "----------------1-------------\n";
+    kaicpp::BaseClass baseClass4 = baseClass + baseClass2;
+    std::cout << "----------------2-------------\n";
+    baseClass4 = baseClass + baseClass3;
+    std::cout << "----------------3-------------\n";
+//    baseClass + baseClass2 = baseClass4;
+    std::cout << "----------------4-------------\n";
     return 0;
 }
 

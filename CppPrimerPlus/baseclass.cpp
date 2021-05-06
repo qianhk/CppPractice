@@ -56,15 +56,16 @@ kaicpp::BaseClass::BaseClass(const kaicpp::BaseClass &other) {
 }
 
 kaicpp::BaseClass &kaicpp::BaseClass::operator=(const kaicpp::BaseClass &other) {
-    if (this != &other) { // Operator=() does not handle self-assignment properly 处理自我赋值
-        //clear old data or delete pointer
-        printf("operator=1 old.value=%d newValue=%d\n", mTestValue, other.mTestValue);
-        this->mTestValue = other.mTestValue;
-        strcpy(mCity, "BaseClass::operator=1");
+    if (this == &other) { // 如果没有则 Operator=() does not handle self-assignment properly 处理自我赋值
+        return *this;
     }
+    //clear old data or delete pointer
+    //delete []mPointers; delete mPointer;
+    printf("operator=1 old.value=%d newValue=%d\n", mTestValue, other.mTestValue);
+    this->mTestValue = other.mTestValue;
+    strcpy(mCity, "BaseClass::operator=1");
     return *this;
 }
-
 
 kaicpp::BaseClass &kaicpp::BaseClass::operator=(int testValue) {
     printf("operator=2 old.value=%d newValue=%d\n", mTestValue, testValue);
@@ -110,4 +111,8 @@ int kaicpp::BaseClass::sJs = 0;
 kaicpp::BaseClass::~BaseClass() {
     printf("~BaseClass() js=%d value=%d city=%s\n", sJs, mTestValue, mCity);
     --sJs;
+}
+
+const kaicpp::BaseClass kaicpp::BaseClass::operator+(const kaicpp::BaseClass &r) const {
+    return kaicpp::BaseClass(mTestValue + r.mTestValue);
 }

@@ -64,6 +64,9 @@ namespace kaicpp {
         bool operator<=(const BaseClass &rhs) const;
         bool operator>=(const BaseClass &rhs) const;
 
+        //如果返回值不加const，那么baseClass + baseClass2 = baseClass4可写但无意义
+        const BaseClass operator+(const BaseClass &r) const;
+
         char &operator[](int i);
 
     protected:

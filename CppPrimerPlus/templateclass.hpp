@@ -21,6 +21,29 @@ namespace kaicpp {
         int mTop = 0; // C++ 11 support
     };
 
+//        kaicpp::TestTemplateClass<kaicpp::BaseClass> testT1;
+//        kaicpp::TestTemplateClass<kaicpp::BaseClass, float> testT2;
+    template<typename T, typename T3, typename T2 = int>
+    class TestTemplateClass {
+    };
+
+    template
+    class kaicpp::Stack<float, 30>; //显式实例化
+
+    template<>
+    class TestTemplateClass<Stack<float, 30>, double> {
+        //显式具体化 c++11 不要求 >> 之间有空格
+    };
+
+    template<>
+    class TestTemplateClass<const char *, double, float> { //显式具体化
+    };
+
+    template<class T>
+    class TestTemplateClass<T, double, float> { //部分具体化
+    };
+    //编译器将选择具体化程度最高的
+
     template<typename T, int maxCount>
     bool Stack<T, maxCount>::isEmpty() const {
         bool empty = mTop == 0;

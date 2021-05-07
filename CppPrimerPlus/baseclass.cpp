@@ -122,26 +122,37 @@ const kaicpp::BaseClass kaicpp::BaseClass::operator+(const kaicpp::BaseClass &r)
 }
 
 kaicpp::DerivedClass::DerivedClass() : BaseClass(1010) {
-    printf("%s\n", __FUNCTION__ );
+    printf("%s\n", __FUNCTION__);
 }
 
 void kaicpp::BaseClass::printInfoVirtual() {
-    printf("BaseClass %s\n", __FUNCTION__ );
+    printf("BaseClass %s\n", __FUNCTION__);
 }
 
 void kaicpp::BaseClass::printInfoNoVirtual() {
-    printf("BaseClass %s\n", __FUNCTION__ );
+    printf("BaseClass %s\n", __FUNCTION__);
+}
+
+void kaicpp::BaseClass::thisIsProtectedMethod() {
+    printf("BaseClass::%s\n", __FUNCTION__);
+}
+
+void kaicpp::BaseClass::thisIsPrivateMethod() {
+    printf("BaseClass::%s\n", __FUNCTION__);
 }
 
 void kaicpp::DerivedClass::printInfoVirtual() {
-    printf("DerivedClass %s\n", __FUNCTION__ );
+    printf("DerivedClass %s\n", __FUNCTION__);
 }
 
 void kaicpp::DerivedClass::printInfoNoVirtual() {
-    printf("DerivedClass %s\n", __FUNCTION__ );
+    printf("DerivedClass %s\n", __FUNCTION__);
 }
 
 kaicpp::DerivedClass::~DerivedClass() {
-    printf("%s\n", __FUNCTION__ );
+    printf("%s\n", __FUNCTION__);
 }
 
+kaicpp::DerivedPrivateClass::DerivedPrivateClass() : BaseClass(6) {
+
+}

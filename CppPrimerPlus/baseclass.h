@@ -55,6 +55,12 @@ namespace kaicpp {
         virtual void printInfoVirtual();
         void printInfoNoVirtual();
 
+    protected:
+        void thisIsProtectedMethod();
+        int mProtectedInt;
+    private:
+        void thisIsPrivateMethod();
+
     public:
         std::ostream &operator<<(std::ostream &os); //成员函数重载<<
         explicit operator int() const; //转换函数
@@ -98,6 +104,14 @@ namespace kaicpp {
 
         //与基类同名同参数函数，将会隐藏基类的函数，即使是指针调用也直接根据指针当前类型调用对应函数，不走虚函数表
         void printInfoNoVirtual(); //正常开发中不要这样使用
+    };
+
+    class DerivedPrivateClass : private BaseClass {
+    public:
+        DerivedPrivateClass();
+        using BaseClass::printInfoVirtual; //使用using重新定义访问权限 原public
+        using BaseClass::thisIsProtectedMethod; //使用using重新定义访问权限 原protected
+//        using BaseClass::thisIsPrivateMethod; //原私有方法不能这么使用
     };
 }
 

@@ -6,6 +6,7 @@
 #include <array>
 #include <ctime>
 #include "baseclass.h"
+#include <valarray>
 
 extern int gTestValue;
 //extern const int gTestConstValue2;
@@ -113,13 +114,33 @@ int main() {
     pDerivedClass->printInfoVirtual();
     pDerivedClass->printInfoNoVirtual();
     std::cout << "----------------pointer derived -> error ------------\n";
-    pDerivedClass = (kaicpp::DerivedClass *)pBaseClass; //正常开发中禁止这样使用
+    pDerivedClass = (kaicpp::DerivedClass *) pBaseClass; //正常开发中禁止这样使用
     pDerivedClass->printInfoVirtual(); //BaseClass printInfoVirtual
     pDerivedClass->printInfoNoVirtual(); //此错误示例把base强制转给了derived， DerivedClass printInfoNoVirtual
     std::cout << "----------------pointer base -> derived ------------\n";
     pBaseClass = &derivedClass;
     pBaseClass->printInfoVirtual(); //DerivedClass printInfoVirtual
     pBaseClass->printInfoNoVirtual(); //BaseClass printInfoNoVirtual
+    std::cout << "----------------pointer base -> ref ------------\n";
+    kaicpp::BaseClass &refBaseClass = derivedClass;
+    refBaseClass.printInfoVirtual(); //DerivedClass printInfoVirtual
+    refBaseClass.printInfoNoVirtual(); //BaseClass printInfoVirtual
+    std::cout << "---------------- valarray ------------\n";
+    std::valarray<int> v(66, 8);
+    noNeedInt = v.min();
+    noNeedInt = v.max();
+    noNeedInt = v.size();
+    noNeedInt = v.sum();
+    std::cout << "---------------- private inherit ------------\n";
+    kaicpp::DerivedPrivateClass derivedPrivateClass;
+    derivedPrivateClass.printInfoVirtual();
+    derivedPrivateClass.thisIsProtectedMethod();
+//    derivedPrivateClass.thisIsPrivateMethod(); //原私有方法不能通过using重新定义访问权限
+
+    //cannot cast 'kaicpp::DerivedPrivateClass' to its private base class 'kaicpp::BaseClass'
+//    pBaseClass = &derivedPrivateClass;
+
+    std::cout << "---------------- over ------------\n";
     return 0;
 }
 

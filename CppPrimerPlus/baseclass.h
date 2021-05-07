@@ -122,6 +122,7 @@ namespace kaicpp {
         SecondDerivedClass();
         void printInfoVirtual2() override;
     };
+
 }
 
 //void kaiswap2(int &a, int &b);

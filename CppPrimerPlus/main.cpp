@@ -7,6 +7,7 @@
 #include <ctime>
 #include "baseclass.h"
 #include <valarray>
+#include "templateclass.hpp"
 
 extern int gTestValue;
 //extern const int gTestConstValue2;
@@ -151,6 +152,18 @@ int main() {
     secondDerivedClass.DerivedClass::printInfoVirtual2();
     secondDerivedClass.DerivedPrivateClass::printInfoVirtual2();
     secondDerivedClass.printInfoVirtual2();
+    std::cout << "---------------- template class ------------\n";
+    kaicpp::Stack<int, 3> kaiStack;
+    bool noNeedBool = kaiStack.isEmpty();
+    noNeedBool = kaiStack.push(1);
+    noNeedBool = kaiStack.push(2);
+    noNeedBool = kaiStack.push(3);
+    noNeedBool = kaiStack.push(4);
+    noNeedBool = kaiStack.pop(noNeedInt);
+    noNeedBool = kaiStack.isEmpty();
+    noNeedBool = kaiStack.pop(noNeedInt);
+    noNeedBool = kaiStack.pop(noNeedInt);
+    noNeedBool = kaiStack.pop(noNeedInt);
     std::cout << "---------------- over ------------\n";
     return 0;
 }

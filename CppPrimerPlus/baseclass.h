@@ -53,6 +53,7 @@ namespace kaicpp {
         void setTestValue(int testValue);
 
         virtual void printInfoVirtual();
+        virtual void printInfoVirtual2();
         void printInfoNoVirtual();
 
     protected:
@@ -96,22 +97,30 @@ namespace kaicpp {
         Small, Media, Large, Xlarge
     };
 
-    class DerivedClass : public BaseClass {
+    class DerivedClass : virtual public BaseClass {
     public:
         DerivedClass();
         virtual ~DerivedClass();
         void printInfoVirtual() override;
+        void printInfoVirtual2() override;
 
         //与基类同名同参数函数，将会隐藏基类的函数，即使是指针调用也直接根据指针当前类型调用对应函数，不走虚函数表
         void printInfoNoVirtual(); //正常开发中不要这样使用
     };
 
-    class DerivedPrivateClass : private BaseClass {
+    class DerivedPrivateClass : virtual protected BaseClass {
     public:
         DerivedPrivateClass();
         using BaseClass::printInfoVirtual; //使用using重新定义访问权限 原public
         using BaseClass::thisIsProtectedMethod; //使用using重新定义访问权限 原protected
 //        using BaseClass::thisIsPrivateMethod; //原私有方法不能这么使用
+        void printInfoVirtual2() override;
+    };
+
+    class SecondDerivedClass : public DerivedClass, public DerivedPrivateClass {
+    public:
+        SecondDerivedClass();
+        void printInfoVirtual2() override;
     };
 }
 

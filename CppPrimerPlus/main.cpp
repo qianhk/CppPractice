@@ -114,9 +114,11 @@ int main() {
     pDerivedClass->printInfoVirtual();
     pDerivedClass->printInfoNoVirtual();
     std::cout << "----------------pointer derived -> error ------------\n";
-    pDerivedClass = (kaicpp::DerivedClass *) pBaseClass; //正常开发中禁止这样使用
-    pDerivedClass->printInfoVirtual(); //BaseClass printInfoVirtual
-    pDerivedClass->printInfoNoVirtual(); //此错误示例把base强制转给了derived， DerivedClass printInfoNoVirtual
+
+    // 虚继承时直接禁止(编译错误) cannot cast xx to xx via virtual base
+//    pDerivedClass = (kaicpp::DerivedClass *) pBaseClass; //正常开发中禁止这样使用
+//    pDerivedClass->printInfoVirtual(); //BaseClass printInfoVirtual
+//    pDerivedClass->printInfoNoVirtual(); //此错误示例把base强制转给了derived， DerivedClass printInfoNoVirtual
     std::cout << "----------------pointer base -> derived ------------\n";
     pBaseClass = &derivedClass;
     pBaseClass->printInfoVirtual(); //DerivedClass printInfoVirtual
@@ -140,6 +142,15 @@ int main() {
     //cannot cast 'kaicpp::DerivedPrivateClass' to its private base class 'kaicpp::BaseClass'
 //    pBaseClass = &derivedPrivateClass;
 
+    std::cout << "---------------- class virtual public otherClass ------------\n";
+    kaicpp::SecondDerivedClass secondDerivedClass;
+//    secondDerivedClass.printInfoVirtual(); //多继承调用的哪个基类的方法？ xxx found in multiple base classes of different types
+    secondDerivedClass.DerivedClass::printInfoVirtual(); //或者在secondDerivedClass里override一个printInfoVirtual
+    secondDerivedClass.DerivedPrivateClass::printInfoVirtual();
+    secondDerivedClass.BaseClass::printInfoVirtual2();
+    secondDerivedClass.DerivedClass::printInfoVirtual2();
+    secondDerivedClass.DerivedPrivateClass::printInfoVirtual2();
+    secondDerivedClass.printInfoVirtual2();
     std::cout << "---------------- over ------------\n";
     return 0;
 }
@@ -148,3 +159,4 @@ int main() {
 
 
  */
+

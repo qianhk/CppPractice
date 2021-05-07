@@ -129,6 +129,10 @@ void kaicpp::BaseClass::printInfoVirtual() {
     printf("BaseClass %s\n", __FUNCTION__);
 }
 
+void kaicpp::BaseClass::printInfoVirtual2() {
+    printf("BaseClass %s\n", __FUNCTION__);
+}
+
 void kaicpp::BaseClass::printInfoNoVirtual() {
     printf("BaseClass %s\n", __FUNCTION__);
 }
@@ -145,6 +149,10 @@ void kaicpp::DerivedClass::printInfoVirtual() {
     printf("DerivedClass %s\n", __FUNCTION__);
 }
 
+void kaicpp::DerivedClass::printInfoVirtual2() {
+    printf("DerivedClass %s\n", __FUNCTION__);
+}
+
 void kaicpp::DerivedClass::printInfoNoVirtual() {
     printf("DerivedClass %s\n", __FUNCTION__);
 }
@@ -155,4 +163,23 @@ kaicpp::DerivedClass::~DerivedClass() {
 
 kaicpp::DerivedPrivateClass::DerivedPrivateClass() : BaseClass(6) {
 
+}
+
+void kaicpp::DerivedPrivateClass::printInfoVirtual2() {
+    printf("DerivedPrivateClass %s\n", __FUNCTION__);
+
+}
+
+
+kaicpp::SecondDerivedClass::SecondDerivedClass() :
+//有虚基类时，需显式初始化基类,如BaseClass(16),自动禁止通过中间类传递参数, 调用顺序像普通初始化列表一样与写的顺序无关，基类的自动先调用
+//如果基类有默认构造函数且未未显式调用将自动调用默认构造函数
+        DerivedClass(), DerivedPrivateClass(), BaseClass(16) {
+
+}
+
+
+void kaicpp::SecondDerivedClass::printInfoVirtual2() {
+    printf("SecondDerivedClass %s _ ", __FUNCTION__);
+    DerivedPrivateClass::printInfoVirtual2();
 }

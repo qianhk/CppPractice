@@ -150,6 +150,35 @@ namespace kaicpp {
 
         bool pop(U &a, V &x) { return s1.pop(a) && s2.pop(x); }
     };
+
+    /*模板类和友元
+    1. 非模板友元 普通函数或函数参数里有模板类:
+        friend void report();
+        friend void report(HasFriend<T> &);
+        需开发者自行显式定义对应函数
+    2. 约束(bound)模板友元 友元类型取决于类被实例化时的类型:
+        template <typename T> void counts();
+        template <typename T> void report(T &);
+        friend void counts<T>(); //由于无参数，无法反推, <T>里的T不能省
+        friend void report<>(HasFriend<T> &);
+    3. 非约束(unbound)模板友元 友元的所有具体化都是类的每一个具体化的友元
+     */
+    template<typename T>
+    class ManyFriend {
+    private:
+        T item;
+    public:
+        explicit ManyFriend(const T &i) : item(i) {}
+
+        template<typename C, typename D>
+        friend void showTemplate(C &c, D &d);
+    };
+
+    template<typename C, typename D>
+    void showTemplate(C &c, D &d) {
+        std::cout << c.item << ", " << d.item << std::endl;
+    }
+
 }
 
 #endif //CPPPRACTICE_TEMPLATECLASS_HPP

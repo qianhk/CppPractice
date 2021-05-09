@@ -14,6 +14,16 @@ extern int gTestValue;
 namespace kaicppsub2 = kaicpp::subns::subns2;
 using std::endl;
 
+//模板别名 C++ 11
+template<typename T>
+using Stack_3 = kaicpp::Stack<T, 3>;
+
+template<int n>
+using IntStack = kaicpp::Stack<int, n>;
+
+//typedef 无法用在模板别名上
+//typedef template <typename T> kaicpp::Stack<T, 3> xxxx;
+
 int main() {
 
     printf(R"(raw ansi string \"\n")");
@@ -180,6 +190,23 @@ int main() {
     nebula.pop(noNeedInt, fa);
     nebula.pop(noNeedInt, fa);
     nebula.pop(noNeedInt, fa);
+    std::cout << "---------------- 模板类和友元 unbound template friend to a template class ------------\n";
+    typedef kaicpp::ManyFriend<int> IntManyFriend;
+    using DoubleManyFriend = kaicpp::ManyFriend<double>; //C++ 11: 使用using 代替 typedef
+    using USING_INT = int;
+//    using p1 = const char *;
+//    typedef const int *(*pa1)[10];
+//    using pa2 = const int *(*)[10]; //可读性更好
+
+    kaicpp::ManyFriend<USING_INT> hfi1(10);
+    IntManyFriend hfi2(20);
+    DoubleManyFriend hfdb(10.5);
+    showTemplate(hfi1, hfi2);
+    showTemplate(hfdb, hfi2);
+
+    IntStack<2> intStackTest;
+    Stack_3<double> doubleStack;
+
     std::cout << "---------------- over ------------\n";
     return 0;
 }

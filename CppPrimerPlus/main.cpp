@@ -164,6 +164,14 @@ int main() {
     noNeedBool = kaiStack.pop(noNeedInt);
     noNeedBool = kaiStack.pop(noNeedInt);
     noNeedBool = kaiStack.pop(noNeedInt);
+    std::cout << "---------------- 成员模板 ------------\n";
+    kaicpp::beta<double> guy(3.5, 3);
+    guy.show();
+    std::cout << guy.blab(10, 2.3) << endl;
+    std::cout << guy.blab(10.0, 2.3) << endl;
+    guy.show2();
+    std::cout << guy.blab2(10, 2.3) << endl;
+    std::cout << guy.blab2(10.0, 2.3) << endl;
     std::cout << "---------------- over ------------\n";
     return 0;
 }

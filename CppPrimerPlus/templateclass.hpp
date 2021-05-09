@@ -72,6 +72,71 @@ namespace kaicpp {
         std::cout << "pop failed: " << std::endl;
         return false;
     }
+
+    //成员模板
+    template<typename T>
+    class beta {
+    private:
+        template<typename V> //nested template class member
+        class hold {
+        private:
+            V val;
+        public:
+            explicit hold(V v = 0) : val(v) {}
+
+            void show() const { std::cout << "hold show: " << val << std::endl; }
+
+            void show2() const;
+
+            V value() const { return val; }
+        };
+
+        template<typename V> //only declaration
+        class hold2;
+
+        hold<T> q;
+        hold<int> n;
+    public:
+        beta(T t, int i) : q(t), n(i) {}
+
+        template<typename U>
+        U blab(U u, T t) { return (n.value() + q.value()) * u / t; }
+
+        //only declaration
+        template<typename U>
+        U blab2(U u, T t);
+
+        void show() const {
+            q.show();
+            n.show();
+        };
+
+        void show2() const;
+
+    };
+
+    // here  class or member definition
+    template<typename T>
+    template<typename V>
+    class beta<T>::hold2 {
+    private:
+        V val;
+    };
+
+    template<typename T>
+    template<typename V>
+    void beta<T>::hold<V>::show2() const { std::cout << "hold show2: " << val << std::endl; }
+
+    template<typename T>
+    void beta<T>::show2() const {
+        q.show();
+        n.show();
+    }
+
+    template<typename T>
+    template<typename U>
+    U beta<T>::blab2(U u, T t) { return (n.value() + q.value()) * u / t; }
+
 }
 
 #endif //CPPPRACTICE_TEMPLATECLASS_HPP

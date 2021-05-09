@@ -137,6 +137,19 @@ namespace kaicpp {
     template<typename U>
     U beta<T>::blab2(U u, T t) { return (n.value() + q.value()) * u / t; }
 
+    //将模板用作参数
+    template<template<typename T, int maxCount> class Thing, typename U, typename V, int n> //Thing是模板参数，前面是类型
+    class Crab {
+    private:
+        Thing<U, n> s1;
+        Thing<V, n> s2;
+    public:
+        explicit Crab() = default;
+
+        bool push(U a, V x) { return s1.push(a) && s2.push(x); }
+
+        bool pop(U &a, V &x) { return s1.pop(a) && s2.pop(x); }
+    };
 }
 
 #endif //CPPPRACTICE_TEMPLATECLASS_HPP

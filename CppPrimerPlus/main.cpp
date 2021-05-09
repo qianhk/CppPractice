@@ -172,6 +172,14 @@ int main() {
     guy.show2();
     std::cout << guy.blab2(10, 2.3) << endl;
     std::cout << guy.blab2(10.0, 2.3) << endl;
+    std::cout << "---------------- templates as parameters ------------\n";
+    kaicpp::Crab<kaicpp::Stack, int, float, 2> nebula;
+    nebula.push(1, 1.1);
+    nebula.push(2, 2.2);
+    nebula.push(3, 3.3);
+    nebula.pop(noNeedInt, fa);
+    nebula.pop(noNeedInt, fa);
+    nebula.pop(noNeedInt, fa);
     std::cout << "---------------- over ------------\n";
     return 0;
 }

@@ -9,6 +9,7 @@
 #include <valarray>
 #include "templateclass.hpp"
 #include "exceptiondemo.h"
+#include "rttidemo.h"
 
 extern int gTestValue;
 //extern const int gTestConstValue2;
@@ -209,13 +210,14 @@ int main() {
     Stack_3<double> doubleStack;
 
     std::cout << "---------------- friend class ------------\n";
-    kaicpp::TV tv {};
+    kaicpp::TV tv{};
     kaicpp::Remote remote;
     remote.set_chan(tv, 10);
 
     std::cout << "---------------- exception test ------------\n";
     exceptionTestMain();
-
+    std::cout << "---------------- RTTI (Runtime Type Identification) 运行阶段类型识别 只对有虚函数的类起作用 ------------\n";
+    rttiDemoMain();
     std::cout << "---------------- over ------------\n";
     return 0;
 }

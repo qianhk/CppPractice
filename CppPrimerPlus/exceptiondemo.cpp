@@ -89,6 +89,10 @@ void myUnexpected() {
     std::cout << "myUnexpected\n";
 }
 
+struct Big {
+    double stuff[20000];
+};
+
 void exceptionTestMain() {
 
     std::set_terminate(myQuit);
@@ -141,5 +145,19 @@ void exceptionTestMain() {
 //    z = hmean_throw_bad_hmean3(10, -10);
     // 声明抛出int异常，但是抛出的是其它unexpected异常，触发std::set_unexpected 设置的 myUnexpected
     // 然后继续crash, mac os 系统输出 libc++abi: unexpected_handler unexpectedly returned
+
+    Big *pb;
+    pb = new Big[10]; // 8 * 20000 * 10 = 1,600,000
+//    pb = new Big[100]; // 8 * 20000 * 100 = 16,000,000
+//    pb = new Big[10000000]; //sizeof(double) * 20000 * 10000000 = 1,600,000,000,000
+    // macos new 1.6T 内存 会正常返回地址， 相反编译的时候卡了3秒左右，可能在做什么优化吧
+    Big &&big = Big();
+    big.stuff[0] = 1;
+    big.stuff[1] = 2;
+//    pb[1000000 - 2] = big;
+    std::cout << "new big address=" << (void *) pb << " sizeofByte=" << sizeof(*pb) << std::endl;
+
+    int *pi = new(std::nothrow) int; //new失败时 不要抛出 bad_alloc异常 而是返回空指针
+    int *pi2 = new(std::nothrow) int[100]; //貌似用于指针
 }
 

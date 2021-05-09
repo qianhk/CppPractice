@@ -28,13 +28,16 @@ void rttiDemoMain() {
     const std::type_info &info1 = typeid(pBase); //0x0000000100f404e0
     pBase = &baseClass; //指向相同类的type_info是同一个实例
     const std::type_info &info2 = typeid(pBase); //0x0000000100f404e0
+    const std::type_info &info2_2 = typeid(*pBase); //pBase 和 *pBase是不同的type_info
+    const std::type_info &info2_3 = typeid(baseClass); //info2_2与info2_3地址相同
     pBase = &derivedClass;
     const std::type_info &info3 = typeid(pBase); //0x0000000100f404e0
     pDerived = &derivedClass;
     const std::type_info &info4 = typeid(pDerived); //0x0000000100f40500
     bool boolResult = info1 == info2;
     boolResult = info2 == info4;
-    //mac os: info rttiDemo=P8RTTIDemo base=PN6kaicpp9BaseClassE derived=PN6kaicpp12DerivedClassE~DerivedClass
-    //mac os : 没有虚函数的类也能得到name，但都不是原始类名，name的值取决于编译器实现
-    printf("info rttiDemo=%s base=%s derived=%s", info0.name(), info1.name(), info4.name());
+    boolResult = info2 == info2_2;
+    //mac os: info rttiDemo=P8RTTIDemo pBase=PN6kaicpp9BaseClassE base=N6kaicpp9BaseClassE derived=PN6kaicpp12DerivedClassE~DerivedClass
+    //mac os : 没有虚函数的类也能得到name，但都不是原始类名，name的值取决于编译器实现 指针name前面多了个P
+    printf("info rttiDemo=%s pBase=%s base=%s derived=%s", info0.name(), info2.name(), info2_2.name(), info4.name());
 }

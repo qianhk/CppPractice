@@ -207,6 +207,11 @@ int main() {
     IntStack<2> intStackTest;
     Stack_3<double> doubleStack;
 
+    std::cout << "---------------- friend class ------------\n";
+    kaicpp::TV tv {};
+    kaicpp::Remote remote;
+    remote.set_chan(tv, 10);
+
     std::cout << "---------------- over ------------\n";
     return 0;
 }

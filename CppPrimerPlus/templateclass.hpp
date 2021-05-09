@@ -179,6 +179,25 @@ namespace kaicpp {
         std::cout << c.item << ", " << d.item << std::endl;
     }
 
+    class TV;
+
+    class Remote {
+    public:
+        void set_chan(TV &t, int c);
+    };
+
+    class TV {
+    public:
+        friend class Remote;
+
+//        friend void Remote::set_chan(TV &t, int c);
+    private:
+        int chan;
+    };
+
+    inline void Remote::set_chan(TV &t, int c) {
+        t.chan = c;
+    };
 }
 
 #endif //CPPPRACTICE_TEMPLATECLASS_HPP

@@ -8,6 +8,7 @@
 #include "baseclass.h"
 #include <valarray>
 #include "templateclass.hpp"
+#include "exceptiondemo.h"
 
 extern int gTestValue;
 //extern const int gTestConstValue2;
@@ -211,6 +212,9 @@ int main() {
     kaicpp::TV tv {};
     kaicpp::Remote remote;
     remote.set_chan(tv, 10);
+
+    std::cout << "---------------- exception test ------------\n";
+    exceptionTestMain();
 
     std::cout << "---------------- over ------------\n";
     return 0;

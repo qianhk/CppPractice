@@ -13,7 +13,11 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 #ADD_DEFINITIONS(-DWIN32 -D_WIN32)
 
-add_compile_options(-Wno-unused-variable -Wno-unused-parameter -Wno-unused-value)
+IF (CMAKE_C_COMPILER_ID MATCHES "MSVC")
+    add_compile_options()
+ELSE ()
+    add_compile_options(-Wno-unused-variable -Wno-unused-parameter -Wno-unused-value)
+ENDIF ()
 
 add_subdirectory(PureC)
 add_subdirectory(CppPrimerPlus)
@@ -39,6 +43,9 @@ ELSEIF (APPLE)
 ELSEIF (UNIX)
     MESSAGE(STATUS "Now is UNIX-like OS's.")
 ENDIF ()
+
+message("CMAKE_C_COMPILER_ID=${CMAKE_C_COMPILER_ID} arch=${CMAKE_C_COMPILER_ARCHITECTURE_ID} version=${CMAKE_C_COMPILER_VERSION}")
+message("CMAKE_CXX_COMPILER_ID=${CMAKE_CXX_COMPILER_ID} arch=${CMAKE_CXX_COMPILER_ARCHITECTURE_ID} version=${CMAKE_CXX_COMPILER_VERSION} internal=${CMAKE_CXX_COMPILER_VERSION_INTERNAL} target=${CMAKE_CXX_COMPILER_TARGET} abi=${CMAKE_CXX_COMPILER_ABI}")
 
 if (WIN32)
     message("window USERPROFILE=$ENV{USERPROFILE}")   #C:\Users\xxx

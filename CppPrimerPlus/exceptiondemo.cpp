@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by KaiKai on 2021/5/9.
 //
 
@@ -55,11 +55,11 @@ private:
     double v1, v2;
     char whatstr[64];
 public:
-    explicit bad_hmean2(double a = 0, double b = 0) : v1(a), v2(b) {
+    explicit bad_hmean2(double a = 0, double b = 0) : v1(a), v2(b), whatstr{} {
         sprintf(whatstr, R"(bad_hmean2_mesg: (%.4f, %.4f) : invalid argument a == -b)", a, b);
     };
 
-    const char *what() const _NOEXCEPT override {
+    const char *what() const noexcept override {
         return whatstr;
     }
 };
@@ -146,11 +146,19 @@ void exceptionTestMain() {
     // 声明抛出int异常，但是抛出的是其它unexpected异常，触发std::set_unexpected 设置的 myUnexpected
     // 然后继续crash, mac os 系统输出 libc++abi: unexpected_handler unexpectedly returned
 
-    Big *pb;
+    Big *pb = nullptr;
+    try {
     pb = new Big[10]; // 8 * 20000 * 10 = 1,600,000
 //    pb = new Big[100]; // 8 * 20000 * 100 = 16,000,000
-//    pb = new Big[10000000]; //sizeof(double) * 20000 * 10000000 = 1,600,000,000,000
-    // macos new 1.6T 内存 会正常返回地址， 相反编译的时候卡了3秒左右，可能在做什么优化吧
+//        pb = new Big[10000000]; //sizeof(double) * 20000 * 10000000 = 1,600,000,000,000
+        // macos new 1.6T 内存 会正常返回地址， 相反编译的时候卡了3秒左右，可能在做什么优化吧
+        // win msvc 会crash
+    } catch (const std::bad_alloc & e) {
+        std::cout << "new big exception: std::bad_alloc, what=" << e.what() << std::endl;
+    }
+
+//    pb = new(std::nothrow) Big[10000000]; //win msvc 加了std::nothrow返回 NULL
+
     Big &&big = Big();
     big.stuff[0] = 1;
     big.stuff[1] = 2;

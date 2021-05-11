@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by KaiKai on 2021/5/9.
 //
 
@@ -39,5 +39,7 @@ void rttiDemoMain() {
     boolResult = info2 == info2_2;
     //mac os: info rttiDemo=P8RTTIDemo pBase=PN6kaicpp9BaseClassE base=N6kaicpp9BaseClassE derived=PN6kaicpp12DerivedClassE~DerivedClass
     //mac os : 没有虚函数的类也能得到name，但都不是原始类名，name的值取决于编译器实现 指针name前面多了个P
+    //mscv2017 info rttiDemo=class RTTIDemo * __ptr64 pBase=class kaicpp::BaseClass * __ptr64 base=class kaicpp::BaseClass
+    //         derived=class kaicpp::DerivedClass * __ptr64kaicpp::DerivedClass::~DerivedClass
     printf("info rttiDemo=%s pBase=%s base=%s derived=%s", info0.name(), info2.name(), info2_2.name(), info4.name());
 }

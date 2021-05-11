@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by KaiKai on 2021/4/24.
 //
 
@@ -15,6 +15,10 @@ void outputTestConstValueInfo();
 namespace kaicpp {
     template<typename T>
     void kaiswap(T &a, T &b);
+
+    template<>
+    void kaiswap(int &a, int &b); //不加此声明再mac os上xcode自带的编译器正常，但msvc会提示重定义, 估计使用此方法的.cpp不知道有显式具体化，又从模板创建了通用定义
+//    void __cdecl kaicpp::kaiswap<int>(int &,int &) already defined, fatal error LNK1169: one or more multiply defined symbols found
 
     template<typename T1, typename T2>
     void ft(T1 x, T2 y);

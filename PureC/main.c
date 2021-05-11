@@ -1,18 +1,39 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <limits.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <memory.h>
-#include <stdatomic.h>
-#include <stdalign.h>
 #include <math.h>
-#include <tgmath.h>
 #include <assert.h>
 #include <stdarg.h>
 
+#ifdef _MSC_VER
+#else
+#include <memory.h>
+#include <tgmath.h>
+#if __STDC_VERSION__ >= 201112L
+
+#ifdef __STDC_NO_ATOMICS__
+#error Your C11 compiler is not required to provide stdatomic.h
+#else
+
+#include <stdatomic.h>
+#include <stdalign.h>
+
+#endif
+
+#else  //__STDC_VERSION__ >= 201112L
+//#error Your C compiler isn't providing C11.
+#endif
+
+#endif
+
 #define MONTHS 12
 
+#ifdef _MSC_VER
+int tValue = 3;
+#else
 _Thread_local int tValue = 3; //每个线程都获得该变量的私有备份
+#endif
 
 typedef struct Book {
     char title[16];
@@ -42,10 +63,7 @@ struct {
 #define my_print(fmt, ...)  printf(fmt, ##__VA_ARGS__) //当可变参数的个数为0时，去掉前面的,
 #define my_print2(fmt, ...)  printf(fmt, __VA_ARGS__) //无可变参数变成printf(fmt,)导致编译不过
 
-#if __STDC_VERSION__ < 201112L
-#error Kai Prompt: Not C11
-#endif
-
+#ifndef _MSC_VER
 //泛型选择（ C11 )
 #define MYTYPE(X) _Generic((X), \
     int : "int", \
@@ -53,6 +71,9 @@ struct {
     double: "double", \
     default: "other"  \
 )
+#else
+#define MYTYPE(X) "unsupport type"
+#endif
 
 float mysqrtf(float v) {
     float result = sqrtf(v);
@@ -66,29 +87,42 @@ double mysqrt(double v) {
     return result;
 }
 
+#ifndef _MSC_VER
 #define SQRT(X) _Generic((X), float : mysqrtf, default : mysqrt)(X)
+#endif
 
-void i_will_exit() {
+void i_will_exit(void) {
     printf("i_will_exit\n");
 }
 
-void i_will_exit2() {
+void i_will_exit2(void) {
     printf("i_will_exit2\n");
 }
 
 float sum(int lim, ...) {
     va_list ap;
     float tot = 0;
-    va_start(ap, lim);
+            va_start(ap, lim);
     for (int i = 0; i < lim; ++i) {
         float tmpItem = va_arg(ap, double);
         tot += tmpItem;
     }
-    va_end(ap);
+            va_end(ap);
     return tot;
 }
 
 int main(void) {
+#ifdef _MSC_VER
+    //https://docs.microsoft.com/en-us/cpp/preprocessor/predefined-macros?view=msvc-160   Visual Studio 2017 version 15.9 1916
+    printf("MSVC compile: _MSC_VER=%d _MSC_BUILD=%d _MSC_FULL_VER=%d _MSC_EXTENSIONS=%d\n", _MSC_VER, _MSC_BUILD, _MSC_FULL_VER, _MSC_EXTENSIONS);
+    printf("__FILE=__=%s __DATE__=%s __LINE__=%d __TIME__=%s __TIMESTAMP__=%s\n",
+           __FILE__, __DATE__, __LINE__, __TIME__, __TIMESTAMP__);
+#else
+    printf("__FILE_NAME__=%s __FILE=__=%s __DATE__=%s __LINE__=%d __TIME__=%s __TIMESTAMP__=%s\n",
+           __FILE_NAME__, __FILE__, __DATE__, __LINE__, __TIME__, __TIMESTAMP__);
+    printf("__STDC__=%d __STDC_HOSTED__=%d __STDC_VERSION__=%ld __func__=%s\n",
+           __STDC__, __STDC_HOSTED__, __STDC_VERSION__, __func__);
+#endif
     atexit(i_will_exit); //至少有32个，后注册的先调用
     atexit(i_will_exit2);
     PSQR(8);
@@ -101,10 +135,6 @@ int main(void) {
     PRINT_XN(3);
     PR(1, "x1 = %d\n", x1);
     PR(2, "x2 = %d, x3 = %d\n", x2, x3);
-    printf("__FILE_NAME__=%s __FILE=__=%s __DATE__=%s __LINE__=%d __TIME__=%s __TIMESTAMP__=%s\n",
-           __FILE_NAME__, __FILE__, __DATE__, __LINE__, __TIME__, __TIMESTAMP__);
-    printf("__STDC__=%d __STDC_HOSTED__=%d __STDC_VERSION__=%ld __func__=%s\n",
-           __STDC__, __STDC_HOSTED__, __STDC_VERSION__, __func__);
 
 #undef XNAME
 #undef PRINT_XN
@@ -124,8 +154,9 @@ int main(void) {
 #endif
 
     assert(x3 >= 30); //运行时检查
+#ifndef _MSC_VER
     _Static_assert(MONTHS >= 12, "MONTHS must >= 12"); //C11 编译时检查
-
+#endif
     printf("MYTYPE(x3)=%s\n", MYTYPE(x3));
     printf("MYTYPE(2.0 * x3)=%s\n", MYTYPE(2.0 * x3));
     printf("MYTYPE(__TIMESTAMP__)=%s\n", MYTYPE(__TIMESTAMP__));
@@ -163,6 +194,7 @@ int main(void) {
 //    gets_s(words, sizeof(words));
     printf("gets: %s\n", words);
 
+#ifndef _MSC_VER
     int ar[10] = {0};
     //restrict允许编译器优化代码，只能用于指针，表明restar是访问对象唯一且初始的方式
     int *restrict restar = (int *) malloc(10 * sizeof(int));
@@ -204,13 +236,13 @@ int main(void) {
     printf("&dz: %p\n", &dz);
     printf("&cb: %p\n", &cb);
     printf("&cz: %p\n", &cz);
-
     printf("sin(M_PI_2)=%.4f\n", sinf(M_PI_2));
     printf("cos(M_PI_2)=%.4f Macro\n", cos(M_PI_2)); //宏
     printf("cos(M_PI_2)=%.4f Function\n", (cos)(M_PI_2)); //函数
 
     SQRT(2.f);
     SQRT(2);
+#endif
     sqrt(2.f);
 
     float total = sum(4, 1.1f, 2.2f, 3.3f, 4.1f);

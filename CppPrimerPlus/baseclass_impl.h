@@ -1,4 +1,4 @@
-#ifndef CPPPRACTICE_BASECLASS_IMPL_H
+﻿#ifndef CPPPRACTICE_BASECLASS_IMPL_H
 #define CPPPRACTICE_BASECLASS_IMPL_H
 
 #include "baseclass.h"
@@ -10,6 +10,7 @@ using std::endl;
 namespace kaicpp {
     template<typename T>
     void kaiswap(T &a, T &b) {
+        printf("kaiswap common template version a=%d b=%d\n", (int)a, (int)b);
         T temp = a;
         a = b;
         b = temp;

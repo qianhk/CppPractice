@@ -28,6 +28,8 @@ project(DllFunc)
 #message("lookKai PROJECT_NAME=${PROJECT_NAME}")
 #add_library(${PROJECT_NAME} library.cpp library.h)
 
+ADD_DEFINITIONS(-DKAI_DLL_EXPORTS)
+
 add_library(${PROJECT_NAME} SHARED library.cpp library.h)
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}$<$<CONFIG:Debug>:d>")
 

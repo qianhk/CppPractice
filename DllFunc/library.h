@@ -3,16 +3,21 @@
 
 #include <Windows.h>
 
-#ifdef __cplusplus
-extern "C" {
+
+#ifdef KAI_DLL_EXPORTS
+#define KAI_DECLSPEC_API __declspec(dllexport)
+#else
+#define KAI_DECLSPEC_API __declspec(dllimport)
 #endif
 
-__declspec(dllexport) void WINAPI hello();
+EXTERN_C_START
 
-__declspec(dllexport) HRESULT WINAPI getRoamingAppDataPath(PWSTR *ppszPath);
+KAI_DECLSPEC_API void WINAPI hello();
 
-#ifdef __cplusplus
-}
-#endif
+KAI_DECLSPEC_API HRESULT WINAPI getRoamingAppDataPath(PWSTR *ppszPath);
+
+extern KAI_DECLSPEC_API int gDllInt;
+
+EXTERN_C_END
 
 #endif //CMAKEDLL_LIBRARY_H

@@ -32,6 +32,12 @@ int main(int argc, char *argv[]) {
 
 //    system("pause");
 
+#if defined(KAI_DLL_EXPORTS)
+    std::cout << "in exe: defined KAI_DLL_EXPORTS\n";
+#else
+    std::cout << "in exe: not defined KAI_DLL_EXPORTS\n";
+#endif
+
     std::cout << "sizeof(int)=" << sizeof(int) << std::endl; //win:4  mac:4
     std::cout << "sizeof(long)=" << sizeof(long) << std::endl; //win:4  mac:8
     std::cout << "sizeof(long long)=" << sizeof(long long) << std::endl; //win:8  mac:8

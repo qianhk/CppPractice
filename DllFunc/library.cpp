@@ -6,6 +6,9 @@
 #pragma comment(lib, "shell32.lib")
 #pragma comment(lib, "shlwapi.lib")
 
+
+int gDllInt = 666;
+
 void hello() {
     std::cout << "Hello, World!" << std::endl;
 }
@@ -32,6 +35,11 @@ HRESULT getRoamingAppDataPath(PWSTR *ppszPath) {
 }
 
 void onProcessAttach() {
+#if defined(KAI_DLL_EXPORTS)
+    std::cout << "in dll, defined KAI_DLL_EXPORTS\n";
+#else
+    std::cout << "in dll, not defined KAI_DLL_EXPORTS\n";
+#endif
     std::cout << "lookKai onProcessAttach" << std::endl;
     PWSTR path;
     getRoamingAppDataPath(&path);

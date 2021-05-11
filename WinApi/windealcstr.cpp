@@ -17,6 +17,10 @@ void windeal_main() {
 
     hello();
 
+    int tmpInt = gDllInt;
+    gDllInt = 667;
+    printf("windeal gDllInt=%d %d\n", tmpInt, gDllInt);
+
     PWSTR path;
     HRESULT result = getRoamingAppDataPath(&path);
     if (result == S_OK) {

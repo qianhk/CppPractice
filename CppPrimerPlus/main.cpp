@@ -28,6 +28,12 @@ using IntStack = kaicpp::Stack<int, n>;
 
 int main() {
 
+#if defined(KAI_DLL_EXPORTS)
+    std::cout << "in exe: defined KAI_DLL_EXPORTS\n";
+#else
+    std::cout << "in exe: not defined KAI_DLL_EXPORTS\n";
+#endif
+
     printf(R"(raw ansi string \"\n")");
     printf(R"Kai(   self has )")Kai");
     std::cout << std::endl;

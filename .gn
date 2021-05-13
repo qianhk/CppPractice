@@ -1,0 +1,12 @@
+# 跨平台：GN实践详解（ninja, 编译, windows/mac/android实战）
+# https://blog.csdn.net/weixin_44701535/article/details/88355958
+
+buildconfig = "//gn/BUILDCONFIG.gn"
+
+check_targets = [
+    "//modules/*",
+]
+
+default_args = {
+    is_component_build = false
+}

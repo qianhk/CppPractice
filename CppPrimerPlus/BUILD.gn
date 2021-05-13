@@ -1,0 +1,8 @@
+executable("CppPrimerPlusGn") {
+    sources = [
+        "baseclass.cpp",
+        "exceptiondemo.cpp",
+        "main.cpp",
+        "rttidemo.cpp"
+    ]
+}

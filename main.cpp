@@ -100,5 +100,7 @@ int main(int argc, char *argv[]) {
     mainLeftRight();
 //    system("pause");
 
+    std::cout << "--------------- over ------------------\n";
+
     return 0;
 }

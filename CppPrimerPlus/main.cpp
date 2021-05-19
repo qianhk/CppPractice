@@ -51,7 +51,8 @@ int main() {
     std::vector<int> vi{6, 7};
     vi.push_back(10);
 //    vi.at(0) = 16;
-    for (const auto &item : vi) {
+    for (auto &&item : vi) { //为什么在使用循环语句的过程中，auto&& 是最安全的方式？ 因为当 auto 被推导为不同的左右引用时，与 && 的坍缩组合是完美转发。
+        //https://github.com/changkun/modern-cpp-tutorial/blob/master/book/zh-cn/03-runtime.md
         std::cout << item << ' ';
     }
     std::cout << std::endl;

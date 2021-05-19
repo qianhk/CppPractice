@@ -11,9 +11,12 @@ void lambda_value_capture() {
     auto copy_value = [value] {
         return value;
     };
+    auto copy_value2 = [=] { //隐式捕获 在捕获列表中写一个 & 或 = 向编译器声明采用引用捕获或者值捕获.
+        return value;
+    };
     value = 100;
     auto stored_value = copy_value();
-    std::cout << "值捕获stored_value = " << stored_value << std::endl;
+    std::cout << "值捕获stored_value=" << stored_value << " v2=" << copy_value2() << std::endl;
     // 这时, stored_value == 1, 而 value == 100.
     // 因为 copy_value 在创建时就保存了一份 value 的拷贝
 }
@@ -23,19 +26,34 @@ void lambda_reference_capture() {
     auto copy_value = [&value] {
         return value;
     };
+    auto copy_value2 = [&] {
+        return value;
+    };
     value = 100;
     auto stored_value = copy_value();
-    std::cout << "引用捕获stored_value = " << stored_value << std::endl;
+    std::cout << "引用捕获stored_value=" << stored_value << " v2=" << copy_value2() << std::endl;
     // 这时, stored_value == 100, value == 100.
     // 因为 copy_value 保存的是引用
 }
 
 int main2() {
+    [out = std::ref(std::cout << "Result from C code: " << 3)](){
+        out.get() << ".\n";
+    }();
     auto important = std::make_unique<int>(1);
-    auto add = [v1 = 2, v2 = std::move(important)](int x, int y) -> int {
+    auto add = [v1 = 2, v2 = std::move(important)](int x, int y) -> int { //右值捕获
         return x + y + v1 + (*v2);
     };
+
     std::cout << "表达式捕获:" << add(3, 4) << std::endl;
+
+    auto add14 = [](auto x, auto y) { // c++ 14 允许lambda使用auto
+        return x+y;
+    };
+
+    add14(1, 2);
+    add14(1.1, 2.2);
+
     return 0;
 }
 

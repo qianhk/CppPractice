@@ -6,6 +6,7 @@
 #include "Temple.hpp"
 #include "Thread.h"
 #include "ModelCxx.h"
+#include "usability.h"
 
 using namespace std;
 
@@ -108,6 +109,7 @@ int mainModerns() {
 //    thread.doOperate();
 
     cout << "lookKai model Cxx" << endl;
+    usabilityMain();
     modelRuntimeTest();
 
     return 0;

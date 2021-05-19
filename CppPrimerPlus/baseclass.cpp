@@ -27,6 +27,10 @@ auto kaicpp::testAutoResult(int x, float y) -> decltype(x + y) {
     return x + y;
 }
 
+auto testAutoResult2(int x, float y) { // c++ 14 允许函数前面使用auto
+    return x + y;
+}
+
 //成员数据被初始化顺序与他们出现在类声明中的顺序相同，与初始化器(成员初始化列表)中的排列顺序无关
 kaicpp::BaseClass::BaseClass(int testValue) : /*mTestValue2(2), */ mTestValue(testValue) {
     ++sJs;

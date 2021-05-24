@@ -8,4 +8,4 @@ project(CppPrimerPlus)
 #set(CMAKE_CXX_FLAGS "-stdlib=libc++") # c++生效
 
 
-add_executable(${PROJECT_NAME} main.cpp baseclass.cpp baseclass.h templateclass.hpp exceptiondemo.cpp exceptiondemo.h rttidemo.cpp rttidemo.h)
+add_executable(${PROJECT_NAME} main.cpp baseclass.cpp baseclass.h templateclass.hpp exceptiondemo.cpp exceptiondemo.h rttidemo.cpp rttidemo.h stltest.cpp stltest.h)

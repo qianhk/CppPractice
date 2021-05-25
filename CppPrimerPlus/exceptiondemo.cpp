@@ -74,12 +74,13 @@ double hmean_throw_bad_hmean2(double a, double b) {
     return 2.0 * a * b / (a + b);
 }
 
-double hmean_throw_bad_hmean3(double a, double b) throw(int) {
-    if (a == -b) {
-        throw bad_hmean2(a, b);
-    }
-    return 2.0 * a * b / (a + b);
-}
+////error: ISO C++17 does not allow dynamic exception specifications
+//double hmean_throw_bad_hmean3(double a, double b) throw(int) {
+//    if (a == -b) {
+//        throw bad_hmean2(a, b);
+//    }
+//    return 2.0 * a * b / (a + b);
+//}
 
 void myQuit() {
     std::cout << "myQuit, Terminating due to uncaugh exception.\n";
@@ -96,7 +97,7 @@ struct Big {
 void exceptionTestMain() {
 
     std::set_terminate(myQuit);
-    std::set_unexpected(myUnexpected);
+//    std::set_unexpected(myUnexpected); // //c++17 error: no type named 'set_unexpected' in namespace 'std'
 
     double x, y, z;
     x = 3, y = 6;

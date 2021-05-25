@@ -1,10 +1,11 @@
-//
+﻿//
 //
 
 #include "usability.h"
 #include <iostream>
 #include <vector>
 #include <tuple>
+#include <string>
 //#include <variant> // c++ 17
 
 #define LEN 10
@@ -83,7 +84,7 @@ void usabilityMain() {
 
     const int len_2 = len + 1;
     constexpr int len_2_constexpr = 1 + 2 + 3;
-    char arr_4[len_2];                // 非法
+//    char arr_4[len_2];                // 非法  msvc : error C2131: expression did not evaluate to a constant
     char arr_4_2[len_2_constexpr];         // 合法
 
     // char arr_5[len_foo()+5];          // 非法

@@ -1,4 +1,4 @@
-//
+﻿//
 //
 
 #ifndef CPPPRACTICE_USABILITY_H

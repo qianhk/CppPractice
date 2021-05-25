@@ -5,6 +5,7 @@
 #include "leftright.h"
 #include <iostream>
 #include <vector>
+#include <string>
 
 class AA {
 public:

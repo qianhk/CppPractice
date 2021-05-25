@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by KaiKai on 2021/5/24.
 //
 
@@ -10,6 +10,8 @@
 #include <array>
 #include <unordered_map>
 #include <map>
+#include <algorithm>
+#include <string>
 
 using namespace std;
 
@@ -100,13 +102,13 @@ void stlTestMain() {
             {3, "v3"},
             {2, "v2"}
     };
-    u.erase(2);
-    v.erase(2);
-    u.insert({5, "v5"});
-    v.insert({5, "v5"});
+    u.erase(1);
+    v.erase(1);
     std::pair<int, string> tmpPair = {6, "v6"};
     u.insert(tmpPair);
     v.insert(tmpPair);
+    u.insert({5, "v5"});
+    v.insert({5, "v5"});
 
     std::cout << "std::unordered_map" << std::endl;
     for (const auto &n : u)

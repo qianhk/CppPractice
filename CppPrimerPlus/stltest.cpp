@@ -7,11 +7,20 @@
 #include <vector>
 #include <list>
 #include <set>
+#include <array>
+#include <unordered_map>
+#include <map>
 
 using namespace std;
 
 void stlTestShowInt(int a) {
     cout << a << ' ';
+}
+
+void printSz(const int *p, int len) {
+    for (int i = 0; i < len; ++i) {
+        cout << *(p + i) << '_' << p[i] << ' ';
+    }
 }
 
 void stlTestMain() {
@@ -68,6 +77,44 @@ void stlTestMain() {
     set_difference(casts2, casts2 + cast2Len, dice.begin(), dice.end(), tmpIterC);
     for_each(C.begin(), C.end(), stlTestShowInt);
     cout << endl;
+
+    std::array<int, 4> arr = {1, 3, 4, 2};
+
+    cout << "std:array: ";
+// C 风格接口传参
+//    printSz(arr, arr.size()); // 非法, 无法隐式转换
+    printSz(&arr[0], arr.size());
+    std::sort(arr.begin(), arr.end());
+    cout << "    ___    ";
+    printSz(arr.data(), arr.size());
+    cout << endl;
+
+    // 两组结构按同样的顺序初始化
+    std::unordered_map<int, std::string> u = {
+            {1, "v1"},
+            {3, "v3"},
+            {2, "v2"}
+    };
+    std::map<int, std::string> v = {
+            {1, "v1"},
+            {3, "v3"},
+            {2, "v2"}
+    };
+    u.erase(2);
+    v.erase(2);
+    u.insert({5, "v5"});
+    v.insert({5, "v5"});
+    std::pair<int, string> tmpPair = {6, "v6"};
+    u.insert(tmpPair);
+    v.insert(tmpPair);
+
+    std::cout << "std::unordered_map" << std::endl;
+    for (const auto &n : u)
+        std::cout << "Key:[" << n.first << "] Value:[" << n.second << "]\n";
+
+    std::cout << "std::map" << std::endl;
+    for (auto &&n : v)
+        std::cout << "Key:[" << n.first << "] Value:[" << n.second << "]\n";
 }
 
 /*
@@ -77,8 +124,8 @@ void stlTestMain() {
  (array 并非stl容器，因为长度是固定的，没有调节容器大小的操作)
  c++ 11后新增: (forward_list 单链表) unordered_map  unordered_multimap unordered_multiset unordered_multiset
  前面序列容器，后面关联容器
- 关联容器 set multiset map multimap 底层是基于树结构
- 无序关联容器 unordered_set unordered_multiset unordered_map unordered_multimap 底层是基于数据结构哈希表的，提高添加和删除元素速度级提高查找算法效率
+ 关联容器 set multiset map multimap 底层是基于红黑树结构,插入和搜索的平均复杂度均为 O(log(size))
+ 无序关联容器 unordered_set unordered_multiset unordered_map unordered_multimap 底层是基于数据结构哈希表的，提高添加和删除元素速度级提高查找算法效率 插入和搜索元素的平均复杂度为 O(constant)
 
 
  */

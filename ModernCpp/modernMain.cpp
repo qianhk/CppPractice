@@ -7,6 +7,7 @@
 #include "Thread.h"
 #include "ModelCxx.h"
 #include "usability.h"
+#include "pointers.h"
 
 using namespace std;
 
@@ -111,6 +112,7 @@ int mainModerns() {
     cout << "lookKai model Cxx" << endl;
     usabilityMain();
     modelRuntimeTest();
+    pointersMain();
 
     return 0;
 }

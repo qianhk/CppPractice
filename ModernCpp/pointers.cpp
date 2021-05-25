@@ -48,11 +48,12 @@ struct POINTER_B {
 };
 
 void pointersMain() {
+    std::cout << "------ pointersMain --------\n";
+
     {// auto pointer = new int(10); // illegal, no direct assignment
         // Constructed a std::shared_ptr
         auto pointer = std::make_shared<int>(10);
         foo(pointer);
-        std::cout << "------ pointersMain --------\n";
         std::cout << *pointer << std::endl; // 11
         // The shared_ptr will be destructed before leaving the scope
     }
@@ -124,5 +125,6 @@ void pointersMain() {
         pointerA = *(b->pointer.lock());
         std::cout << "a.use_count()=" << a.use_count() << " b.use_count()=" << b.use_count() << std::endl;
     }
+
 }
 

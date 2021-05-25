@@ -8,6 +8,8 @@
 #include "ModelCxx.h"
 #include "usability.h"
 #include "pointers.h"
+#include "regextest.h"
+#include "teststd17.h"
 
 using namespace std;
 
@@ -19,6 +21,20 @@ typedef struct Books {
     char subject[100];
     int book_id;
 } Books;
+
+struct Storage {
+    char      a;
+    int       b;
+    double    c;
+    long long d;
+};
+
+struct alignas(std::max_align_t) AlignasStorage {
+    char      a;
+    int       b;
+    double    c;
+    long long d;
+};
 
 int mainModerns() {
     Books Book1;        // 定义结构体类型 Books 的变量 Book1
@@ -113,6 +129,12 @@ int mainModerns() {
     usabilityMain();
     modelRuntimeTest();
     pointersMain();
+    regexTestMain();
+
+    //mac os: alignof(Storage): 8    alignof(AlignasStorage): 16
+    std::cout << "alignof(Storage): " << alignof(Storage) << "    alignof(AlignasStorage): " << alignof(AlignasStorage) << std::endl;
+
+    testStd17Main();
 
     return 0;
 }

@@ -6,6 +6,8 @@
 // 必须的头文件是
 //#include <pthread.h>
 
+//https://github.com/changkun/modern-cpp-tutorial/blob/master/book/zh-cn/07-thread.md
+
 void *say_hello(void *args) {
     cout << "Hello w3cschool, addr:" << args << endl;
     return nullptr;

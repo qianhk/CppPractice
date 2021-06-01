@@ -7,8 +7,28 @@
 #include <tuple>
 #include <string>
 //#include <variant> // c++ 17
+#include <initializer_list>
+#include <vector>
 
 #define LEN 10
+
+class InitializerListTest {
+public:
+    std::vector<int> vec;
+
+    InitializerListTest(std::initializer_list<int> list) {
+        for (auto &&it = list.begin(); it != list.end(); ++it) {
+            vec.push_back(*it);
+        }
+    }
+
+public:
+    void foo(std::initializer_list<int> list) {
+        for (int it : list) {
+            vec.push_back(it);
+        }
+    }
+};
 
 int len_foo() {
     int i = 2;
@@ -159,4 +179,22 @@ void usabilityMain() {
         std::cout << "type x == float" << std::endl;
     if (std::is_same<decltype(x), decltype(z)>::value)
         std::cout << "type z == type x" << std::endl;
+
+    InitializerListTest initializerListTest = {1, 2, 3, 4, 5};
+    std::cout << "initializerListTest before: ";
+    for (int &it : initializerListTest.vec) {
+        std::cout << it << " ";
+    }
+    std::cout << "\ninitializerListTest after: ";
+    initializerListTest.foo({7, 8, 9});
+    for (int &it : initializerListTest.vec) {
+        std::cout << it << " ";
+    }
+    std::cout << std::endl;
+    if (int tmp = initializerListTest.vec[0]; tmp < 10) {
+        std::cout << "test if 1 " << tmp << std:: endl;
+    }
+    if (auto tmp = static_cast<float>(initializerListTest.vec[1]); tmp < 10.5f) {
+        std::cout << "test if 2 " << tmp << std:: endl;
+    }
 }

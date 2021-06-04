@@ -10,6 +10,7 @@
 #include "pointers.h"
 #include "regextest.h"
 #include "teststd17.h"
+#include "stringformat.h"
 
 using namespace std;
 
@@ -135,6 +136,8 @@ int mainModerns() {
     std::cout << "alignof(Storage): " << alignof(Storage) << "    alignof(AlignasStorage): " << alignof(AlignasStorage) << std::endl;
 
     testStd17Main();
+
+    stringFormatMain();
 
     return 0;
 }

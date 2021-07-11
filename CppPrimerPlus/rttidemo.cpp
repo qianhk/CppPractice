@@ -7,7 +7,7 @@
 
 using namespace kaicpp;
 
-void rttiDemoMain() {
+void rttiDemoMain(bool crashIt) {
     BaseClass baseClass = BaseClass(3000);
     DerivedClass derivedClass = DerivedClass();
     BaseClass *pBase = &baseClass;
@@ -16,7 +16,9 @@ void rttiDemoMain() {
     pDerived = dynamic_cast<DerivedClass *>(pBase); // ok
     pBase = &baseClass;
     pDerived = dynamic_cast<DerivedClass *>(pBase); // return 0
-//    pDerived->printInfoVirtual(); //空指针 EXC_BAD_ACCESS (code=1, address=0x0)
+    if (crashIt) {
+        pDerived->printInfoVirtual(); //空指针 EXC_BAD_ACCESS (code=1, address=0x0)
+    }
     RTTIDemo rttiDemo;
     RTTIDemo *pRttiDemo = &rttiDemo;
 
@@ -42,4 +44,8 @@ void rttiDemoMain() {
     //mscv2017 info rttiDemo=class RTTIDemo * __ptr64 pBase=class kaicpp::BaseClass * __ptr64 base=class kaicpp::BaseClass
     //         derived=class kaicpp::DerivedClass * __ptr64kaicpp::DerivedClass::~DerivedClass
     printf("info rttiDemo=%s pBase=%s base=%s derived=%s", info0.name(), info2.name(), info2_2.name(), info4.name());
+}
+
+void RTTIDemo::doSth() {
+    printf("RTTIDemo::doSth()\n");
 }

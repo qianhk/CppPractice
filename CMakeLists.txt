@@ -19,6 +19,8 @@ IF (CMAKE_C_COMPILER_ID MATCHES "MSVC")
     add_compile_options()
 ELSE ()
     add_compile_options(-Wno-unused-variable -Wno-unused-parameter -Wno-unused-value)
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+    set(CMAKE_XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT "dwarf-with-dsym")
 ENDIF ()
 
 add_subdirectory(PureC)

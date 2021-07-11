@@ -148,6 +148,7 @@ int main() {
     kaicpp::BaseClass &refBaseClass = derivedClass;
     refBaseClass.printInfoVirtual(); //DerivedClass printInfoVirtual
     refBaseClass.printInfoNoVirtual(); //BaseClass printInfoVirtual
+
     std::cout << "---------------- valarray ------------\n";
     std::valarray<int> v(66, 8);
     noNeedInt = v.min();
@@ -225,7 +226,7 @@ int main() {
     std::cout << "---------------- exception test ------------\n";
     exceptionTestMain();
     std::cout << "---------------- RTTI (Runtime Type Identification) 运行阶段类型识别 只对有虚函数的类起作用 ------------\n";
-    rttiDemoMain();
+    rttiDemoMain(false);
     std::cout << "---------------- stl ------------\n";
     stlTestMain();
     std::cout << "---------------- over ------------\n";
